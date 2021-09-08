@@ -1,0 +1,87 @@
+﻿<Window
+    x:Class="DistantStars.Client.Start.Views.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:helpers="clr-namespace:DistantStars.Client.Common.Helpers;assembly=DistantStars.Client.Common"
+    xmlns:local="clr-namespace:DistantStars.Client.Start.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mvvm="http://prismlibrary.com/"
+    xmlns:viewModels="clr-namespace:DistantStars.Client.Start.ViewModels"
+    Title="登录"
+    Width="430"
+    Height="330"
+    d:DataContext="{d:DesignInstance Type=viewModels:LoginViewModel}"
+    mvvm:ViewModelLocator.AutoWireViewModel="True"
+    Icon="/DistantStars.Client.Resource;Component/Images/DistantStars.ico"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".618*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Grid.RowSpan="2" Margin="-4">
+            <Border.Background>
+                <ImageBrush ImageSource="/DistantStars.Client.Resource;Component/Images/SteinsGate.jpg" Opacity="0.8" />
+            </Border.Background>
+        </Border>
+        <hc:Gravatar
+            Grid.Row="0"
+            Margin="0,0,0,-30"
+            VerticalAlignment="Bottom"
+            Source="/DistantStars.Client.Resource;Component/Images/SteinsGateHeader.jpg"
+            Style="{StaticResource GravatarCircle}">
+            <hc:Gravatar.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="0" />
+            </hc:Gravatar.Effect>
+        </hc:Gravatar>
+        <Grid
+            Grid.Row="1"
+            Width="240"
+            Margin="0,30,0,0"
+            TextBlock.FontSize="16">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <TextBox
+                Grid.Row="0"
+                Height="30"
+                MaxHeight="30"
+                KeyboardNavigation.TabIndex="0"
+                Text="{Binding UserName}" />
+            <PasswordBox
+                Grid.Row="1"
+                Height="30"
+                MaxHeight="30"
+                helpers:PasswordHelper.Attach="True"
+                helpers:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
+                KeyboardNavigation.TabIndex="1" />
+            <Button
+                Grid.Row="2"
+                Height="30"
+                HorizontalAlignment="Stretch"
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LoginView}}}"
+                Content="登录"
+                KeyboardNavigation.TabIndex="3"
+                Style="{StaticResource ButtonPrimary}" />
+            <TextBlock
+                Grid.Row="3"
+                HorizontalAlignment="Center"
+                Foreground="Red"
+                Text="{Binding ErrorMessage}" />
+        </Grid>
+    </Grid>
+</Window>

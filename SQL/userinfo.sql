@@ -1,0 +1,1 @@
+INSERT INTO `userinfo` (`Id`, `UserAccount`, `UserName`, `UserPassword`, `UserIcon`, `RoleId`, `RoleInfoRoleId`) VALUES (1, 'admin', 'admin', 'ABFB5D41B5DCCF7B34A90F32EC475E77', '77a93b926fc2c8e2c64c9ef3ea4a139e', 1, 1);

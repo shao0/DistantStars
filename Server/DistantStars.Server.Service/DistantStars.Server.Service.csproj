@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DistantStars.Server.DBContext\DistantStars.Server.DBContext.csproj" />
+    <ProjectReference Include="..\DistantStars.Server.IService\DistantStars.Server.IService.csproj" />
+  </ItemGroup>
+
+</Project>

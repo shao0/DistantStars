@@ -1,0 +1,172 @@
+﻿<UserControl
+    x:Class="DistantStars.Client.ContentModule.Views.MenuEditView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:converts="clr-namespace:DistantStars.Client.Resource.Converts;assembly=DistantStars.Client.Resource"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fonts="clr-namespace:DistantStars.Client.Resource.Fonts;assembly=DistantStars.Client.Resource"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:viewModels="clr-namespace:DistantStars.Client.ContentModule.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewModels:MenuEditViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/DistantStars.Client.Resource;Component/ResourceDictionarys/Font.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converts:IntToBooleanConvert x:Key="IntToBooleanConvert" />
+            <converts:StringToIconConvert x:Key="StringToIconConvert" />
+            <Style x:Key="Icon.Label" TargetType="Label">
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamily.Iconfont}" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#4C808080" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style BasedOn="{StaticResource TextBlockDefaultBold}" TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="MinWidth" Value="60" />
+            </Style>
+            <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="MinWidth" Value="60" />
+                <Setter Property="Margin" Value="0,5" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Height="30"
+                Command="{Binding SaveCommand}"
+                Content="保存" />
+            <Button
+                Height="30"
+                Margin="10"
+                Command="{Binding GoBackCommand}"
+                Content="返回列表" />
+        </StackPanel>
+        <Grid
+            Grid.Row="1"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="菜单父级" />
+            <ComboBox
+                Grid.Row="0"
+                Grid.Column="1"
+                DisplayMemberPath="MenuHeader"
+                ItemsSource="{Binding Menus}"
+                SelectedValue="{Binding ModelInfo.ParentId}"
+                SelectedValuePath="MenuId" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="菜单名称:" />
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="{Binding ModelInfo.MenuHeader}" />
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Text="菜单图标:" />
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="1"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="5,0"
+                    FontSize="20"
+                    Text="{Binding ModelInfo.MenuIcon, Converter={StaticResource StringToIconConvert}}" />
+                <ToggleButton
+                    Name="IconButton"
+                    Width="50"
+                    Height="30"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="..."
+                    IsChecked="{Binding ShowIcon}" />
+                <Popup
+                    IsOpen="{Binding ShowIcon}"
+                    PlacementTarget="{Binding ElementName=IconButton}"
+                    StaysOpen="False">
+                    <Border Background="AntiqueWhite">
+                        <ItemsControl ItemsSource="{x:Static fonts:IconValues.Icons}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel IsItemsHost="True" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Converter={StaticResource StringToIconConvert}}" Style="{StaticResource Icon.Label}">
+                                        <Label.InputBindings>
+                                            <MouseBinding
+                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.ClickIconCommand}"
+                                                CommandParameter="{Binding}"
+                                                MouseAction="LeftClick" />
+                                        </Label.InputBindings>
+                                    </Label>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </Popup>
+            </StackPanel>
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                Text="菜单View:" />
+            <TextBox
+                Grid.Row="3"
+                Grid.Column="1"
+                Text="{Binding ModelInfo.TargetView}" />
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                Text="菜单状态:" />
+            <StackPanel
+                Grid.Row="4"
+                Grid.Column="1"
+                Orientation="Horizontal">
+                <CheckBox
+                    Margin="5,0"
+                    Content="可用"
+                    IsChecked="{Binding ModelInfo.State, Mode=TwoWay, Converter={StaticResource IntToBooleanConvert}, ConverterParameter=1}" />
+                <CheckBox Content="禁用" IsChecked="{Binding ModelInfo.State, Mode=TwoWay, Converter={StaticResource IntToBooleanConvert}, ConverterParameter=0}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

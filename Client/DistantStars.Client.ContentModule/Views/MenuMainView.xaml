@@ -1,0 +1,23 @@
+﻿<UserControl
+    x:Class="DistantStars.Client.ContentModule.Views.MenuMainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:common="clr-namespace:DistantStars.Client.Common;assembly=DistantStars.Client.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:regions="http://prismlibrary.com/"
+    xmlns:viewModels="clr-namespace:DistantStars.Client.ContentModule.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewModels:MenuMainViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <ContentControl Margin="20" regions:RegionManager.RegionName="{x:Static common:RegionNames.MenuContent}" />
+</UserControl>

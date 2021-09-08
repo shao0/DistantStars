@@ -1,0 +1,1 @@
+INSERT INTO `fileinfomodel` (`MD5`, `FilePath`, `ContentType`, `FileType`, `Extension`) VALUES ('77a93b926fc2c8e2c64c9ef3ea4a139e', 'Images/77a93b926fc2c8e2c64c9ef3ea4a139e.jpg', 'image/jpeg', '0', '.jpg');

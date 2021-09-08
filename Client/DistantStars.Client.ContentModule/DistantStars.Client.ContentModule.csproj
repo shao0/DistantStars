@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7CC34C8B-2660-4CF8-A7E0-BA2322BEF382}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DistantStars.Client.ContentModule</RootNamespace>
+    <AssemblyName>DistantStars.Client.ContentModule</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ContentModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UserControls\SearchAndAddControl.xaml.cs">
+      <DependentUpon>SearchAndAddControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ContentViewModelBase.cs" />
+    <Compile Include="ViewModels\EditViewModelBase.cs" />
+    <Compile Include="ViewModels\MenuEditViewModel.cs" />
+    <Compile Include="ViewModels\MenuMainViewModel.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\RoleEditViewModel.cs" />
+    <Compile Include="ViewModels\RoleMainViewModel.cs" />
+    <Compile Include="ViewModels\RoleViewModel.cs" />
+    <Compile Include="ViewModels\UserEditViewModel.cs" />
+    <Compile Include="ViewModels\UserMainViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="Views\MenuEditView.xaml.cs">
+      <DependentUpon>MenuEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuMainView.xaml.cs">
+      <DependentUpon>MenuMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuView.xaml.cs">
+      <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RoleEditView.xaml.cs">
+      <DependentUpon>RoleEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RoleMainView.xaml.cs">
+      <DependentUpon>RoleMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RoleView.xaml.cs">
+      <DependentUpon>RoleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserEditView.xaml.cs">
+      <DependentUpon>UserEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserMainView.xaml.cs">
+      <DependentUpon>UserMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UserControls\SearchAndAddControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MenuEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\MenuMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\RoleEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\RoleMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\RoleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\UserEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\UserMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Views\UserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\DistantStars.Common.DTO\DistantStars.Common.DTO.csproj">
+      <Project>{2B5CE42A-7A8C-4B3B-BA27-8B3FC407CC1E}</Project>
+      <Name>DistantStars.Common.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.BLL\DistantStars.Client.BLL.csproj">
+      <Project>{ECDF408E-038B-4587-A5EA-2893FF7AB715}</Project>
+      <Name>DistantStars.Client.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.Common\DistantStars.Client.Common.csproj">
+      <Project>{4bfc756e-adc8-4e0f-9d24-34670db139b1}</Project>
+      <Name>DistantStars.Client.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.DAL\DistantStars.Client.DAL.csproj">
+      <Project>{CA69D7FF-ED12-472E-8BC5-6A4BB28DBDA8}</Project>
+      <Name>DistantStars.Client.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.IBLL\DistantStars.Client.IBLL.csproj">
+      <Project>{FE450EDB-908B-4484-B8FA-B32F3E829220}</Project>
+      <Name>DistantStars.Client.IBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.IDAL\DistantStars.Client.IDAL.csproj">
+      <Project>{10026097-6BC9-45EE-BC96-7A456014965E}</Project>
+      <Name>DistantStars.Client.IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.Model\DistantStars.Client.Model.csproj">
+      <Project>{32269d05-163d-4b28-8db3-1cdc5f5f3ca9}</Project>
+      <Name>DistantStars.Client.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.Resource\DistantStars.Client.Resource.csproj">
+      <Project>{621f739d-194e-4ae0-b85a-b93356d8fa23}</Project>
+      <Name>DistantStars.Client.Resource</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Wpf">
+      <Version>8.1.97</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

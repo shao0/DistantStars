@@ -1,0 +1,208 @@
+﻿<UserControl
+    x:Class="DistantStars.Client.ContentModule.Views.UserEditView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:viewModels1="clr-namespace:DistantStars.Client.ContentModule.ViewModels"
+    d:DataContext="{d:DesignInstance Type={x:Type viewModels1:UserEditViewModel}}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <UserControl.Resources>
+        <Storyboard
+            x:Key="ShowStoryboard"
+            TargetProperty="Width"
+            TargetName="PasswordTextBox">
+            <DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames.KeyFrames>
+                    <LinearDoubleKeyFrame KeyTime="0:0:0.2" Value="160" />
+                </DoubleAnimationUsingKeyFrames.KeyFrames>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard
+            x:Key="HiddenStoryboard"
+            TargetProperty="Width"
+            TargetName="PasswordTextBox">
+            <DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames.KeyFrames>
+                    <LinearDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
+                </DoubleAnimationUsingKeyFrames.KeyFrames>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Style BasedOn="{StaticResource TextBlockDefaultBold}" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="MinWidth" Value="60" />
+        </Style>
+        <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="MinWidth" Value="60" />
+            <Setter Property="Margin" Value="0,5" />
+        </Style>
+        <Style
+            x:Key="TextBlock.Style"
+            BasedOn="{StaticResource {x:Type TextBlock}}"
+            TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ModelState}" Value="Modify">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style
+            x:Key="TextBox.Style"
+            BasedOn="{StaticResource {x:Type TextBox}}"
+            TargetType="TextBox">
+            <Setter Property="MinWidth" Value="0" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ModelState}" Value="Add">
+                    <Setter Property="MinWidth" Value="160" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style BasedOn="{StaticResource {x:Type CheckBox}}" TargetType="CheckBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ModelState}" Value="Add">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+            <Button
+                Height="30"
+                Margin="5"
+                Command="{Binding SaveCommand}"
+                Content="保存" />
+            <Button
+                Height="30"
+                Margin="5"
+                Command="{Binding GoBackCommand}"
+                Content="返回列表" />
+        </StackPanel>
+        <Grid
+            Grid.Row="1"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.ColumnSpan="2" Background="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    MinWidth="0"
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Text="头像" />
+                <Ellipse
+                    Grid.Row="1"
+                    Width="100"
+                    Height="100">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{Binding HeadImage}" />
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Ellipse
+                    Grid.Row="1"
+                    Width="100"
+                    Height="100"
+                    Fill="#10808080" />
+
+            </Grid>
+            <Button
+                Grid.Row="1"
+                Grid.Column="0"
+                Command="{Binding SelectedCommand}"
+                Content="选择图片" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                MaxWidth="160"
+                Text="{Binding ModelInfo.UserIconPath}"
+                TextTrimming="CharacterEllipsis"
+                ToolTip="{Binding ModelInfo.UserIconPath}" />
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Text="用户角色:" />
+            <ComboBox
+                Grid.Row="2"
+                Grid.Column="1"
+                MinWidth="160"
+                HorizontalAlignment="Center"
+                DisplayMemberPath="RoleName"
+                ItemsSource="{Binding Roles}"
+                SelectedIndex="0"
+                SelectedValue="{Binding ModelInfo.RoleId}"
+                SelectedValuePath="RoleId" />
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                Text="用户账号:" />
+            <TextBox
+                Grid.Row="3"
+                Grid.Column="1"
+                Text="{Binding ModelInfo.UserAccount}" />
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                Text="用户名称:" />
+            <TextBox
+                Grid.Row="4"
+                Grid.Column="1"
+                Text="{Binding ModelInfo.UserName}" />
+            <CheckBox
+                Grid.Row="5"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="OnChecked"
+                Content="修改密码"
+                Cursor="Hand"
+                IsChecked="{Binding ModelInfo.ModifyPassword}" />
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="0"
+                Style="{StaticResource TextBlock.Style}"
+                Text="用户密码" />
+            <TextBox
+                Name="PasswordTextBox"
+                Grid.Row="5"
+                Grid.Column="1"
+                Width="0"
+                Style="{StaticResource TextBox.Style}"
+                Text="{Binding Password}" />
+        </Grid>
+    </Grid>
+</UserControl>
