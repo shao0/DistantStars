@@ -45,7 +45,7 @@ namespace DistantStars.Server.Start.Controllers
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<UserInfoDto>>> GetAllUsers([FromQuery] UserParameter parameter)
         {
-            IEnumerable<UserInfo> users = await _userService.GetAllUsers(parameter);
+            var users = await _userService.GetAllUsers(parameter);
             var dtos = _mapper.Map<IEnumerable<UserInfoDto>>(users);
             return Ok(dtos);
         }

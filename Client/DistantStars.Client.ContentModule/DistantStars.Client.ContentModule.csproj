@@ -66,8 +66,6 @@
     <Compile Include="UserControls\SearchAndAddControl.xaml.cs">
       <DependentUpon>SearchAndAddControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ContentViewModelBase.cs" />
-    <Compile Include="ViewModels\EditViewModelBase.cs" />
     <Compile Include="ViewModels\MenuEditViewModel.cs" />
     <Compile Include="ViewModels\MenuMainViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />

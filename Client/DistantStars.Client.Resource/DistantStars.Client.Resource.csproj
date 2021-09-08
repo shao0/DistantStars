@@ -48,6 +48,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\LoadingUserControl.xaml.cs">
+      <DependentUpon>LoadingUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WindowHead.cs" />
     <Compile Include="Converts\IntToBooleanConvert.cs" />
     <Compile Include="Converts\StringToIconConvert.cs" />
     <Compile Include="Fonts\IconValues.cs" />
@@ -83,9 +87,17 @@
     <Resource Include="Images\YC.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\LoadingUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ResourceDictionarys\Font.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceDictionarys\WindowHead.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ButtonStyle.xaml">
       <SubType>Designer</SubType>
@@ -95,6 +107,110 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠00.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠02.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠04.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠05.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠06.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠07.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠08.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠09.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠17.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠18.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠19.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠22.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠27.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠28.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠31.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Game\爱宠32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

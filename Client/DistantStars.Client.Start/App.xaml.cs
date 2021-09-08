@@ -46,6 +46,7 @@ namespace DistantStars.Client.Start
         }
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
+            moduleCatalog.AddModule<GameModule.GameModule>();
             moduleCatalog.AddModule<HeadModule.HeadModule>();
             moduleCatalog.AddModule<ContentModule.ContentModule>();
             base.ConfigureModuleCatalog(moduleCatalog);

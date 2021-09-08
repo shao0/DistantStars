@@ -6,7 +6,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace DistantStars.Client.ContentModule.ViewModels
+namespace DistantStars.Client.Model.ViewModels
 {
     public abstract class EditViewModelBase : BindableBase, INavigationAware
     {

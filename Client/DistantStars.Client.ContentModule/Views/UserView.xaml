@@ -5,8 +5,8 @@
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="clr-namespace:DistantStars.Client.Model.Models;assembly=DistantStars.Client.Model"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:systems="clr-namespace:DistantStars.Client.Model.Models.Systems;assembly=DistantStars.Client.Model"
     xmlns:userControls="clr-namespace:DistantStars.Client.ContentModule.UserControls"
     xmlns:viewModels="clr-namespace:DistantStars.Client.ContentModule.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewModels:UserViewModel}"
@@ -38,8 +38,8 @@
                 <DataGridTextColumn Binding="{Binding UserName}" Header="用户名称" />
                 <DataGridTemplateColumn Header="操作">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="{x:Type models:UserInfoModel}">
-                            <StackPanel Orientation="Horizontal">
+                        <DataTemplate DataType="{x:Type systems:UserInfoModel}">
+                            <StackPanel Name="OperationPanel" Orientation="Horizontal">
                                 <Button
                                     MinWidth="60"
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.EditCommand}"
@@ -52,6 +52,11 @@
                                     Content="删除"
                                     Foreground="Red" />
                             </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding UserName}" Value="admin">
+                                    <Setter TargetName="OperationPanel" Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

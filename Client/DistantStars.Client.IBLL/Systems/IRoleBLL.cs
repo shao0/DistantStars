@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DistantStars.Client.Model.Models;
+using DistantStars.Client.Model.Models.Systems;
 using DistantStars.Common.DTO.Parameters;
 
 namespace DistantStars.Client.IBLL.Systems

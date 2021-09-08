@@ -1,12 +1,12 @@
 ﻿using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using DistantStars.Client.Common;
-using DistantStars.Client.Common.Events;
 using DistantStars.Client.Common.Helpers;
 using DistantStars.Client.IBLL.Systems;
-using DistantStars.Client.Model.Models;
+using DistantStars.Client.Model;
+using DistantStars.Client.Model.Events;
+using DistantStars.Client.Model.Models.Systems;
 using DistantStars.Common.DTO.Enums;
 using DistantStars.Common.DTO.Parameters;
 using Prism.Commands;

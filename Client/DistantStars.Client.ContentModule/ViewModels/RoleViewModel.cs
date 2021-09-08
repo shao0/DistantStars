@@ -7,6 +7,7 @@ using DistantStars.Client.ContentModule.Views;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model.Enums;
 using DistantStars.Client.Model.Models;
+using DistantStars.Client.Model.Models.Systems;
 using DistantStars.Common.DTO.Parameters;
 using Prism.Commands;
 using Prism.Mvvm;

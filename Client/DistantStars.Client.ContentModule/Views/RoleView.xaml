@@ -9,6 +9,7 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:userControls="clr-namespace:DistantStars.Client.ContentModule.UserControls"
     xmlns:viewModels="clr-namespace:DistantStars.Client.ContentModule.ViewModels"
+    xmlns:systems="clr-namespace:DistantStars.Client.Model.Models.Systems;assembly=DistantStars.Client.Model"
     d:DataContext="{d:DesignInstance Type=viewModels:RoleViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -38,8 +39,8 @@
                 <DataGridTextColumn Binding="{Binding StateName}" Header="角色状态" />
                 <DataGridTemplateColumn Header="操作">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate DataType="{x:Type models:RoleInfoModel}">
-                            <StackPanel Orientation="Horizontal">
+                        <DataTemplate DataType="{x:Type systems:RoleInfoModel}">
+                            <StackPanel Name="OperationPanel" Orientation="Horizontal">
                                 <Button
                                     MinWidth="60"
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.EditCommand}"
@@ -52,6 +53,11 @@
                                     Content="删除"
                                     Foreground="Red" />
                             </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RoleId}" Value="1">
+                                    <Setter TargetName="OperationPanel" Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

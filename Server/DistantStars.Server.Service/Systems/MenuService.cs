@@ -22,31 +22,40 @@ namespace DistantStars.Server.Service.Systems
         public async Task<IEnumerable<MenuInfo>> GetMenusByUserIdAsync(int userId)
         {
             var roleId = _context.UserInfo.First(user => user.Id == userId).RoleId;
-            var query = _context.MenuInfo
-                .Where(menu => menu.State == 1)
-                .Join(_context.RoleMenu
-                        .Where(roleMenu => roleId == roleMenu.RoleId),
-                 menu => menu.MenuId,
-                 roleMenu => roleMenu.MenuId,
-                 (menu, roleMenu) => menu);
+            IQueryable<MenuInfo> query = _context.MenuInfo;
+            if (roleId == 1)
+            {
+                return await query.Distinct().ToListAsync();
+            }
+            query = query
+               .Where(menu => menu.State == 1)
+               .Join(_context.RoleMenu
+                       .Where(roleMenu => roleId == 1 || roleId == roleMenu.RoleId),
+                menu => menu.MenuId,
+                roleMenu => roleMenu.MenuId,
+                (menu, roleMenu) => menu);
 
             return await query.Distinct().ToListAsync();
         }
 
         public async Task<IEnumerable<MenuInfo>> GetMenusByRoleIdAsync(int roleId)
         {
+            IQueryable<MenuInfo> query = _context.MenuInfo;
+            if (roleId == 1)
+            {
+                return await query.Distinct().ToListAsync();
+            }
             var roleIds = _context.RoleInfo
                 .Where(role => role.RoleId == roleId && role.State == 1)
                 .Select(role => role.RoleId);
-
-            var query = _context.MenuInfo
-                .Where(menu => menu.State == 1)
-                .Join(_context.RoleMenu
-                        .Where(roleMenu => roleIds
-                            .Contains(roleMenu.RoleId)),
-                    menu => menu.MenuId,
-                    roleMenu => roleMenu.MenuId,
-                    (menu, roleMenu) => menu);
+            query = query
+               .Where(menu => menu.State == 1)
+               .Join(_context.RoleMenu
+                       .Where(roleMenu => roleIds
+                           .Contains(roleMenu.RoleId)),
+                   menu => menu.MenuId,
+                   roleMenu => roleMenu.MenuId,
+                   (menu, roleMenu) => menu);
             return await query.Distinct().ToListAsync();
         }
 

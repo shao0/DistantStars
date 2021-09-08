@@ -153,6 +153,10 @@
       <Project>{ca69d7ff-ed12-472e-8bc5-6a4bb28dbda8}</Project>
       <Name>DistantStars.Client.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.GameModule\DistantStars.Client.GameModule.csproj">
+      <Project>{9c498098-86e2-43bc-b56a-264b4229af3f}</Project>
+      <Name>DistantStars.Client.GameModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DistantStars.Client.HeadModule\DistantStars.Client.HeadModule.csproj">
       <Project>{7d23b58e-947d-4830-aebb-e038dbb1524a}</Project>
       <Name>DistantStars.Client.HeadModule</Name>
@@ -164,6 +168,10 @@
     <ProjectReference Include="..\DistantStars.Client.IDAL\DistantStars.Client.IDAL.csproj">
       <Project>{10026097-6bc9-45ee-bc96-7a456014965e}</Project>
       <Name>DistantStars.Client.IDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.Resource\DistantStars.Client.Resource.csproj">
+      <Project>{621f739d-194e-4ae0-b85a-b93356d8fa23}</Project>
+      <Name>DistantStars.Client.Resource</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -43,7 +43,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistantStars.Client.IBLL", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistantStars.Client.Resource", "Client\DistantStars.Client.Resource\DistantStars.Client.Resource.csproj", "{621F739D-194E-4AE0-B85A-B93356D8FA23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistantStars.Server.Start", "Server\DistantStars.Server.Start\DistantStars.Server.Start.csproj", "{E9E5DC66-DFA9-4DB8-BE27-53093519D23A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistantStars.Server.Start", "Server\DistantStars.Server.Start\DistantStars.Server.Start.csproj", "{E9E5DC66-DFA9-4DB8-BE27-53093519D23A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{C6C8B05D-487D-411B-A677-A22BCFDBB0EB}"
 EndProject
@@ -51,13 +51,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{98AA1B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Context", "Context", "{2A588EF1-488F-4420-9B4E-437EEE4755C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistantStars.Server.IService", "Server\DistantStars.Server.IService\DistantStars.Server.IService.csproj", "{1519B0CE-F6F5-47B0-B05F-DAD732F542D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistantStars.Server.IService", "Server\DistantStars.Server.IService\DistantStars.Server.IService.csproj", "{1519B0CE-F6F5-47B0-B05F-DAD732F542D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistantStars.Server.Service", "Server\DistantStars.Server.Service\DistantStars.Server.Service.csproj", "{77D68D54-DD27-479B-835F-FD688B6BC4DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistantStars.Server.Service", "Server\DistantStars.Server.Service\DistantStars.Server.Service.csproj", "{77D68D54-DD27-479B-835F-FD688B6BC4DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistantStars.Server.DBContext", "Server\DistantStars.Server.DBContext\DistantStars.Server.DBContext.csproj", "{18C2C7EE-9A50-4D28-B3E9-22426D4DDB21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistantStars.Server.DBContext", "Server\DistantStars.Server.DBContext\DistantStars.Server.DBContext.csproj", "{18C2C7EE-9A50-4D28-B3E9-22426D4DDB21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistantStars.Server.Model", "Server\DistantStars.Server.Model\DistantStars.Server.Model.csproj", "{1ECFA7EE-1BE1-4B7A-A1A9-FA2D64D1CBCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistantStars.Server.Model", "Server\DistantStars.Server.Model\DistantStars.Server.Model.csproj", "{1ECFA7EE-1BE1-4B7A-A1A9-FA2D64D1CBCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistantStars.Client.GameModule", "Client\DistantStars.Client.GameModule\DistantStars.Client.GameModule.csproj", "{9C498098-86E2-43BC-B56A-264B4229AF3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,10 @@ Global
 		{1ECFA7EE-1BE1-4B7A-A1A9-FA2D64D1CBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ECFA7EE-1BE1-4B7A-A1A9-FA2D64D1CBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ECFA7EE-1BE1-4B7A-A1A9-FA2D64D1CBCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C498098-86E2-43BC-B56A-264B4229AF3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C498098-86E2-43BC-B56A-264B4229AF3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C498098-86E2-43BC-B56A-264B4229AF3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C498098-86E2-43BC-B56A-264B4229AF3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,6 +165,7 @@ Global
 		{77D68D54-DD27-479B-835F-FD688B6BC4DC} = {C6C8B05D-487D-411B-A677-A22BCFDBB0EB}
 		{18C2C7EE-9A50-4D28-B3E9-22426D4DDB21} = {2A588EF1-488F-4420-9B4E-437EEE4755C1}
 		{1ECFA7EE-1BE1-4B7A-A1A9-FA2D64D1CBCC} = {98AA1B60-EF89-445E-923C-888DFDC81483}
+		{9C498098-86E2-43BC-B56A-264B4229AF3F} = {A44F2CB2-5978-4DA2-975C-4E41CEA43569}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E271D18-D82F-4DBC-9BCF-1F4C69049C27}

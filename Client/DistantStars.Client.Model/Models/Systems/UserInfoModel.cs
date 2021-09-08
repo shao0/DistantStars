@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Prism.Mvvm;
 
-namespace DistantStars.Client.Model.Models
+namespace DistantStars.Client.Model.Models.Systems
 {
     public class UserInfoModel:BindableBase
     {
@@ -52,3 +52,4 @@ namespace DistantStars.Client.Model.Models
         public IEnumerable<MenuInfoModel> Menus { get; set; }
     }
 }
+                                                                                                                                                                                                                                                                                                                                                

@@ -5,6 +5,7 @@ using DistantStars.Client.Common.Helpers;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.IDAL.Systems;
 using DistantStars.Client.Model.Models;
+using DistantStars.Client.Model.Models.Systems;
 using DistantStars.Common.DTO.Dtos;
 using DistantStars.Common.DTO.Parameters;
 

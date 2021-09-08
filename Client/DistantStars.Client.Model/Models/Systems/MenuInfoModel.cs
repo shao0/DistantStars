@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Prism.Mvvm;
 
-namespace DistantStars.Client.Model.Models
+namespace DistantStars.Client.Model.Models.Systems
 {
     public class MenuInfoModel : BindableBase
     {

@@ -11,9 +11,10 @@
     Height="740"
     MaxHeight="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"
     prism:ViewModelLocator.AutoWireViewModel="True"
+    BorderBrush="#80808080"
+    BorderThickness="1"
     Icon="/DistantStars.Client.Resource;Component/Images/DistantStars.ico"
     WindowStartupLocation="CenterScreen"
-    WindowState="Maximized"
     WindowStyle="None">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" />
@@ -113,9 +114,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ContentControl
-            Grid.Row="0"
-            prism:RegionManager.RegionName="{x:Static common:RegionNames.MainHeader}" />
+        <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static common:RegionNames.MainHeader}" />
         <TabControl
             Grid.Row="1"
             Margin="10"

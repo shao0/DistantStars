@@ -1,4 +1,5 @@
-﻿using Prism.Regions;
+﻿using DistantStars.Client.Model.ViewModels;
+using Prism.Regions;
 
 namespace DistantStars.Client.ContentModule.ViewModels
 {

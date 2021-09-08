@@ -4,7 +4,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace DistantStars.Client.ContentModule.ViewModels
+namespace DistantStars.Client.Model.ViewModels
 {
     public class ContentViewModelBase : BindableBase, INavigationAware
     {

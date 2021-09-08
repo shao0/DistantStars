@@ -1,7 +1,6 @@
-﻿
-using DistantStars.Client.Model.Models;
+﻿using DistantStars.Client.Model.Models.Systems;
 
-namespace DistantStars.Client.Common
+namespace DistantStars.Client.Model
 {
     public static class Global
     {
