@@ -7,6 +7,7 @@ using DistantStars.Client.Model;
 using DistantStars.Client.Model.Events;
 using DistantStars.Client.Model.Models.Systems;
 using DistantStars.Client.Resource.Fonts;
+using DistantStars.Common.DTO.Enums;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -73,6 +74,10 @@ namespace DistantStars.Client.HeadModule.ViewModels
                 if (model.ParentId == 0)
                     RootMenu.Children.Add(model);
                 parent?.Children.Add(model);
+                if (model.MenuType == MenuType.Home)
+                {
+                    Click(model);
+                }
             }
         }
 
@@ -120,6 +125,7 @@ namespace DistantStars.Client.HeadModule.ViewModels
                 {
                     var parameters = new NavigationParameters();
                     parameters.Add("Title", menu.MenuHeader);
+                    parameters.Add("MenuType", menu.MenuType);
                     _region.RequestNavigate(RegionNames.MainContent, menu.TargetView, parameters);
                 }
                 Show = false;

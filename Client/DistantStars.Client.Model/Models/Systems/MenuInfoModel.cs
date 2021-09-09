@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using DistantStars.Common.DTO.Enums;
 using Prism.Mvvm;
 
 namespace DistantStars.Client.Model.Models.Systems
@@ -13,7 +14,7 @@ namespace DistantStars.Client.Model.Models.Systems
 
         public int ParentId { get; set; }
 
-        public string MenuType { get; set; }
+        public MenuType MenuType { get; set; }
 
         public string StateName { get; set; }
 

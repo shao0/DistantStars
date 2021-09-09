@@ -66,7 +66,7 @@
                                 Background="Transparent"
                                 Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.DataContext.CloseCommand}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
-                                Visibility="Collapsed">
+                                Visibility="Visible">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border
@@ -98,10 +98,15 @@
                                 <Setter TargetName="ItemBorder" Property="Background" Value="DodgerBlue" />
                                 <Setter Property="Foreground" Value="White" />
                             </Trigger>
+                            <DataTrigger Binding="{Binding Content.DataContext.MenuType}" Value="Home">
+                                <Setter TargetName="Close" Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ItemBorder" Property="Background" Value="DarkGray" />
                                 <Setter Property="Foreground" Value="Black" />
-                                <Setter TargetName="Close" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter TargetName="Close" Property="Visibility" Value="Collapsed" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Media3D;
 using DistantStars.Client.IBLL.Systems;
+using DistantStars.Client.Start.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -99,14 +102,14 @@ namespace DistantStars.Client.Start.ViewModels
                     throw new Exception("密码不能为空!");
                 }
 
-                if (obj is Window w)
+                if (obj is Window login)
                 {
                     //message = _view.Show("登录中...", ShowEnum.ShowLoading);
 
                     if (await _userBll.LoginAsync(UserName, Password))
                     {
                         //message.Message = "登录成功";
-                        w.DialogResult = true;
+                        login.DialogResult = true;
                     }
                     else
                     {

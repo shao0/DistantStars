@@ -73,6 +73,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\DistantStars.Common.DTO\DistantStars.Common.DTO.csproj">
+      <Project>{2B5CE42A-7A8C-4B3B-BA27-8B3FC407CC1E}</Project>
+      <Name>DistantStars.Common.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DistantStars.Client.Common\DistantStars.Client.Common.csproj">
       <Project>{4bfc756e-adc8-4e0f-9d24-34670db139b1}</Project>
       <Name>DistantStars.Client.Common</Name>

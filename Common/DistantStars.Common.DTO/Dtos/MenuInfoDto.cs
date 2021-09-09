@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DistantStars.Common.DTO.Enums;
 
 namespace DistantStars.Common.DTO.Dtos
 {
@@ -12,7 +13,7 @@ namespace DistantStars.Common.DTO.Dtos
 
         public string TargetView { get; set; }
 
-        public string MenuType { get; set; }
+        public MenuType MenuType { get; set; }
 
         public int ParentId { get; set; }
 

@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fonts="clr-namespace:DistantStars.Client.Resource.Fonts;assembly=DistantStars.Client.Resource"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:DistantStars.Client.Model;assembly=DistantStars.Client.Model"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewModels="clr-namespace:DistantStars.Client.ContentModule.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewModels:MenuEditViewModel}"
@@ -81,6 +82,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Text="菜单父级" />
             <ComboBox
@@ -93,21 +95,33 @@
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
-                Text="菜单名称:" />
-            <TextBox
+                Text="菜单类型:" />
+            <ComboBox
                 Grid.Row="1"
                 Grid.Column="1"
-                Text="{Binding ModelInfo.MenuHeader}" />
+                DisplayMemberPath="Key"
+                ItemsSource="{x:Static model:Global.MenuTypes}"
+                SelectedValue="{Binding ModelInfo.MenuType}"
+                SelectedValuePath="Value" />
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
+                Text="菜单名称:" />
+            <TextBox
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="{Binding ModelInfo.MenuHeader}" />
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
                 Text="菜单图标:" />
             <StackPanel
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="1"
                 Orientation="Horizontal">
                 <TextBlock
                     Margin="5,0"
+                    FontFamily="{StaticResource FontFamily.Iconfont}"
                     FontSize="20"
                     Text="{Binding ModelInfo.MenuIcon, Converter={StaticResource StringToIconConvert}}" />
                 <ToggleButton
@@ -146,19 +160,19 @@
                 </Popup>
             </StackPanel>
             <TextBlock
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="0"
                 Text="菜单View:" />
             <TextBox
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="1"
                 Text="{Binding ModelInfo.TargetView}" />
             <TextBlock
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="0"
                 Text="菜单状态:" />
             <StackPanel
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="1"
                 Orientation="Horizontal">
                 <CheckBox

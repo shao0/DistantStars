@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using DistantStars.Client.Common;
+using DistantStars.Common.DTO.Enums;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -9,6 +10,8 @@ namespace DistantStars.Client.Model.ViewModels
     public class ContentViewModelBase : BindableBase, INavigationAware
     {
         protected readonly IRegionManager _region;
+
+        
 
         public ContentViewModelBase(IRegionManager region)
         {
@@ -26,6 +29,21 @@ namespace DistantStars.Client.Model.ViewModels
         {
             get => _title;
             set => SetProperty(ref _title, value);
+        }
+        #endregion
+
+        #region MenuType MenuType 菜单属性
+        /// <summary>
+        /// 菜单属性字段
+        /// </summary>
+        private MenuType _MenuType;
+        /// <summary>
+        /// 菜单属性属性
+        /// </summary>
+        public MenuType MenuType
+        {
+            get => _MenuType;
+            set => SetProperty(ref _MenuType, value);
         }
         #endregion
 
@@ -62,6 +80,7 @@ namespace DistantStars.Client.Model.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Title = navigationContext.Parameters.GetValue<string>("Title");
+           _MenuType = navigationContext.Parameters.GetValue<MenuType>("MenuType");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

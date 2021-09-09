@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DistantStars.Common.DTO.Enums;
 
 namespace DistantStars.Server.Model.Models
 {
@@ -21,7 +22,7 @@ namespace DistantStars.Server.Model.Models
 
         public string TargetView { get; set; }
 
-        public string MenuType { get; set; }
+        public MenuType MenuType { get; set; }
 
         public int ParentId { get; set; }
 
