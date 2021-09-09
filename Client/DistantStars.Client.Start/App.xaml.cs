@@ -16,12 +16,12 @@ namespace DistantStars.Client.Start
     /// <summary>
     /// App.xaml 的交互逻辑
     /// </summary>
-    public partial class App 
+    public partial class App
     {
 
         protected override Window CreateShell()
         {
-           return Container.Resolve<MainView>();
+            return Container.Resolve<MainView>();
         }
 
         protected override void InitializeShell(Window shell)
@@ -49,6 +49,7 @@ namespace DistantStars.Client.Start
             moduleCatalog.AddModule<GameModule.GameModule>();
             moduleCatalog.AddModule<HeadModule.HeadModule>();
             moduleCatalog.AddModule<ContentModule.ContentModule>();
+            moduleCatalog.AddModule<BarrageModule.BarrageModule>();
             base.ConfigureModuleCatalog(moduleCatalog);
         }
     }

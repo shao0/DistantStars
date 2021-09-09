@@ -1,0 +1,223 @@
+﻿<UserControl
+    x:Class="DistantStars.Client.BarrageModule.Views.BarrageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:converts="clr-namespace:DistantStars.Client.BarrageModule.Converts"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:DistantStars.Client.BarrageModule.Models"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:viewModels="clr-namespace:DistantStars.Client.BarrageModule.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:BarrageViewModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converts:ValueToBoolConvert x:Key="ValueToBool" />
+        <converts:BarrageColorToColorConvert x:Key="BarrageColorToColor" />
+        <Storyboard
+            x:Key="ShowExtend"
+            TargetProperty="Height"
+            TargetName="ExtendControl">
+            <DoubleAnimation To="140" Duration="0:0:0.15">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard
+            x:Key="HiddenExtend"
+            TargetProperty="Height"
+            TargetName="ExtendControl">
+            <DoubleAnimation To="0" Duration="0:0:0.15">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ListBox Grid.Row="1" ItemsSource="{Binding BarrageList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:BarrageInfo}">
+                        <TextBlock Name="txt" TextWrapping="Wrap">
+                            <Run Foreground="#2b94ff" Text="{Binding NikeName}" />
+                            <Run Foreground="#2b94ff" Text=":" />
+                            <Run Foreground="{Binding BarrageColor, Converter={StaticResource BarrageColorToColor}}" Text="{Binding Content}" />
+                        </TextBlock>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding BarrageType}" Value="dgb">
+                                <Setter TargetName="txt" Property="FontSize" Value="18" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox Grid.Row="2" ItemsSource="{Binding GiftList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:BarrageGift}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{Binding NikeName}" />
+                            <Label
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{Binding Content}" />
+                            <MediaElement
+                                Grid.Column="2"
+                                Width="40"
+                                Height="40"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                LoadedBehavior="Play"
+                                MediaEnded="MediaElement_OnMediaEnded"
+                                Source="{Binding DynamicGraph}"
+                                UnloadedBehavior="Manual" />
+                            <DockPanel Grid.Column="3">
+                                <TextBlock
+                                    Name="CountText"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Top"
+                                    Foreground="Red">
+                                    <Run Text=" x" />
+                                    <Run Text="{Binding Count}" />
+                                </TextBlock>
+                                <TextBlock
+                                    Name="ContinuityText"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    DockPanel.Dock="Bottom"
+                                    Foreground="OrangeRed">
+                                    <Run Text=" x" />
+                                    <Run Text="{Binding Continuity}" />
+                                </TextBlock>
+                            </DockPanel>
+                        </Grid>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Count}" Value="1">
+                                <Setter TargetName="CountText" Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Grid
+                Name="ExtendControl"
+                Grid.Row="0"
+                Height="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top">
+                <StackPanel>
+                    <StackPanel IsEnabled="{Binding NotReceived}" Orientation="Horizontal">
+                        <CheckBox
+                            Margin="5"
+                            Content="B站"
+                            IsChecked="{Binding Platform, Converter={StaticResource ValueToBool}, ConverterParameter=BiliBili}" />
+                        <CheckBox
+                            Margin="5"
+                            Content="斗鱼"
+                            IsChecked="{Binding Platform, Converter={StaticResource ValueToBool}, ConverterParameter=DouYu}" />
+                    </StackPanel>
+                    <TextBox IsEnabled="{Binding NotReceived}" Text="{Binding RoomNumber}" />
+                    <ToggleButton Command="{Binding ConnectCommand}" Cursor="Hand">
+                        <ToggleButton.Template>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Label
+                                    Name="PART_Label"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="15" />
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter TargetName="PART_Label" Property="Content" Value="断开" />
+                                        <Setter TargetName="PART_Label" Property="Foreground" Value="Red" />
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter TargetName="PART_Label" Property="Content" Value="连接" />
+                                        <Setter TargetName="PART_Label" Property="Foreground" Value="Green" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </ToggleButton.Template>
+                    </ToggleButton>
+                </StackPanel>
+                <ToggleButton
+                    Name="Toggle"
+                    Margin="0,0,10,-50"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Click="Toggle_OnClick"
+                    Cursor="Hand">
+                    <ToggleButton.Template>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Border Background="Transparent" Cursor="Hand">
+                                <Path
+                                    Name="PART_Path"
+                                    Width="20"
+                                    Height="20"
+                                    Margin="5"
+                                    Data="M 5 5 L 15 15 25 5"
+                                    RenderTransformOrigin="0.5,.5"
+                                    Stretch="Uniform"
+                                    Stroke="Black"
+                                    StrokeThickness="3" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="PART_Path" Property="RenderTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="180" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </ToggleButton.Template>
+                </ToggleButton>
+            </Grid>
+        </Grid>
+        <!--<ItemsControl Grid.Column="1" ItemsSource="{Binding MessageList}">
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer>
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:BarrageInfo}">
+                    <ScrollViewer>
+                        <TextBox Text="{Binding JsonMessage}" />
+                    </ScrollViewer>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>-->
+    </Grid>
+</UserControl>

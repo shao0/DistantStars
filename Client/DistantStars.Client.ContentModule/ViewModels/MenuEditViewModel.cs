@@ -5,9 +5,11 @@ using System.Windows.Input;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model;
 using DistantStars.Client.Model.Enums;
+using DistantStars.Client.Model.Events;
 using DistantStars.Client.Model.Models.Systems;
 using DistantStars.Client.Model.ViewModels;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Regions;
 
 namespace DistantStars.Client.ContentModule.ViewModels
@@ -15,9 +17,12 @@ namespace DistantStars.Client.ContentModule.ViewModels
     public class MenuEditViewModel : EditViewModelBase
     {
         private readonly IMenuBLL _menu;
-        public MenuEditViewModel(IRegionManager region, IMenuBLL menu) : base(region)
+        private readonly IEventAggregator _ea;
+
+        public MenuEditViewModel(IRegionManager region, IMenuBLL menu, IEventAggregator ea) : base(region)
         {
             _menu = menu;
+            _ea = ea;
         }
 
         public ObservableCollection<MenuInfoModel> Menus { get; set; } = new ObservableCollection<MenuInfoModel>();
@@ -62,11 +67,8 @@ namespace DistantStars.Client.ContentModule.ViewModels
             {
                 await _menu.AddMenuAsync(menuInfo);
             }
+            _ea.GetEvent<CurrentUserMenuUpdateEvent>().Publish(Global.CurrentUserInfo.Id);
 
-            if (Global.CurrentUserInfo.RoleId == 1)
-            {
-
-            }
             //message.Close();
             //View.Show("保存成功");
             GoBack();
@@ -82,7 +84,7 @@ namespace DistantStars.Client.ContentModule.ViewModels
 
         private void ClickIcon(object obj)
         {
-            if (obj is string v&& ModelInfo is MenuInfoModel menuInfo)
+            if (obj is string v && ModelInfo is MenuInfoModel menuInfo)
             {
                 menuInfo.MenuIcon = v;
                 ShowIcon = false;

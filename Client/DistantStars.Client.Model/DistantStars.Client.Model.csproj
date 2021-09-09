@@ -64,7 +64,7 @@
     <Compile Include="Models\Systems\RoleInfoModel.cs" />
     <Compile Include="Models\Systems\UserInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Events\CurrentRoleUpdateEvent.cs" />
+    <Compile Include="Events\CurrentUserMenuUpdateEvent.cs" />
     <Compile Include="Events\CurrentUserUpdateEvent.cs" />
     <Compile Include="ViewModels\ContentViewModelBase.cs" />
     <Compile Include="ViewModels\EditViewModelBase.cs" />

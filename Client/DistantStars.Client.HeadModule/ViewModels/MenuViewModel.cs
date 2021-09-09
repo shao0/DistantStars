@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using DistantStars.Client.Common;
+using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model;
 using DistantStars.Client.Model.Events;
 using DistantStars.Client.Model.Models.Systems;
@@ -19,14 +20,16 @@ namespace DistantStars.Client.HeadModule.ViewModels
     {
         private readonly IRegionManager _region;
         private readonly IEventAggregator _ea;
+        private readonly IMenuBLL _menu;
 
         private List<MenuInfoModel> Menus { get; set; }
 
-        public MenuViewModel(IRegionManager region, IEventAggregator ea)
+        public MenuViewModel(IRegionManager region, IEventAggregator ea, IMenuBLL menu)
         {
             if (Global.CurrentUserInfo == null) return;
             _region = region;
             _ea = ea;
+            _menu = menu;
             Menus = Global.CurrentUserInfo.Menus.ToList();
         }
 
@@ -91,15 +94,16 @@ namespace DistantStars.Client.HeadModule.ViewModels
         {
             if (obj is FrameworkElement view)
             {
-                _ea.GetEvent<CurrentRoleUpdateEvent>().Subscribe(UpdateRole);
+                _ea.GetEvent<CurrentUserMenuUpdateEvent>().Subscribe(UpdateRole);
                 CreateMenuTree();
             }
         }
 
-        private void UpdateRole(RoleInfoModel obj)
+        private async void UpdateRole(int Id)
         {
             Menus.Clear();
-            foreach (var model in obj.Menus)
+            var menus = await _menu.GetMenusByUserIdAsync(Id);
+            foreach (var model in menus)
             {
                 model.Clear();
                 Menus.Add(model);
@@ -108,8 +112,6 @@ namespace DistantStars.Client.HeadModule.ViewModels
         }
 
         #endregion
-
-
 
         #region ClickMenuCommand 选择菜单
         /// <summary>

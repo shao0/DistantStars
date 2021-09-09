@@ -65,7 +65,7 @@ namespace DistantStars.Client.ContentModule.ViewModels
                 var model = await _role.UpdateRoleAsync(roleInfo);
                 if (model.RoleId == Global.CurrentUserInfo.RoleId)
                 {
-                    _ea.GetEvent<CurrentRoleUpdateEvent>().Publish(roleInfo);
+                    _ea.GetEvent<CurrentUserMenuUpdateEvent>().Publish(Global.CurrentUserInfo.Id);
                 }
             }
             else if (ModelState == EditState.Add)

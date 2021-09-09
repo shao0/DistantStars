@@ -61,6 +61,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DistantStars.Server.Model",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistantStars.Client.GameModule", "Client\DistantStars.Client.GameModule\DistantStars.Client.GameModule.csproj", "{9C498098-86E2-43BC-B56A-264B4229AF3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistantStars.Client.BarrageModule", "Client\DistantStars.Client.BarrageModule\DistantStars.Client.BarrageModule.csproj", "{5787925E-57EB-4B70-867C-F4CAF877AF83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{9C498098-86E2-43BC-B56A-264B4229AF3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C498098-86E2-43BC-B56A-264B4229AF3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C498098-86E2-43BC-B56A-264B4229AF3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5787925E-57EB-4B70-867C-F4CAF877AF83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5787925E-57EB-4B70-867C-F4CAF877AF83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5787925E-57EB-4B70-867C-F4CAF877AF83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5787925E-57EB-4B70-867C-F4CAF877AF83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +172,7 @@ Global
 		{18C2C7EE-9A50-4D28-B3E9-22426D4DDB21} = {2A588EF1-488F-4420-9B4E-437EEE4755C1}
 		{1ECFA7EE-1BE1-4B7A-A1A9-FA2D64D1CBCC} = {98AA1B60-EF89-445E-923C-888DFDC81483}
 		{9C498098-86E2-43BC-B56A-264B4229AF3F} = {A44F2CB2-5978-4DA2-975C-4E41CEA43569}
+		{5787925E-57EB-4B70-867C-F4CAF877AF83} = {A44F2CB2-5978-4DA2-975C-4E41CEA43569}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E271D18-D82F-4DBC-9BCF-1F4C69049C27}

@@ -137,6 +137,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DistantStars.Client.BarrageModule\DistantStars.Client.BarrageModule.csproj">
+      <Project>{5787925e-57eb-4b70-867c-f4caf877af83}</Project>
+      <Name>DistantStars.Client.BarrageModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DistantStars.Client.BLL\DistantStars.Client.BLL.csproj">
       <Project>{ecdf408e-038b-4587-a5ea-2893ff7ab715}</Project>
       <Name>DistantStars.Client.BLL</Name>

@@ -3,7 +3,7 @@ using Prism.Events;
 
 namespace DistantStars.Client.Model.Events
 {
-    public class CurrentRoleUpdateEvent : PubSubEvent<RoleInfoModel>
+    public class CurrentUserMenuUpdateEvent : PubSubEvent<int>
     {
     }
 }
