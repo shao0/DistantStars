@@ -5,15 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
+using System.Windows.Threading;
+using DistantStars.Client.Common.ViewModels;
 using DistantStars.Client.Model.Models.Games;
-using DistantStars.Client.Model.ViewModels;
 using Prism.Commands;
 using Prism.Events;
-using Prism.Mvvm;
 using Prism.Regions;
-using Timer = System.Timers.Timer;
 
 namespace DistantStars.Client.GameModule.ViewModels
 {
@@ -36,7 +34,7 @@ namespace DistantStars.Client.GameModule.ViewModels
         /// <summary>
         /// 关卡级别
         /// </summary>
-        private readonly Level _level;
+        private Level _level;
 
         /// <summary>
         /// 第一个选中
@@ -52,7 +50,7 @@ namespace DistantStars.Client.GameModule.ViewModels
         /// <summary>
         /// 时间计时
         /// </summary>
-        private Timer _timer;
+        private DispatcherTimer _timer;
 
         private bool AutoControl = false;
 
@@ -154,11 +152,12 @@ namespace DistantStars.Client.GameModule.ViewModels
         private void InitialTimer()
         {
             TimeProgress = MaxProgress;
-            _timer = new Timer(1000);
-            _timer.Elapsed += _Timer_Elapsed;
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick;
         }
 
-        private void _Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             TimeProgress--;
             if (TimeProgress < 0)
@@ -436,11 +435,11 @@ namespace DistantStars.Client.GameModule.ViewModels
 
         private void Tips()
         {
-            GetLook(out var block1, out var block2);
+            GetJoin(out var block1, out var block2);
             block1.Tips = block2.Tips = true;
         }
 
-        void GetLook(out Block a, out Block b)
+        void GetJoin(out Block a, out Block b)
         {
             a = b = null;
             foreach (var keyValuePair in _groupData)
@@ -517,7 +516,7 @@ namespace DistantStars.Client.GameModule.ViewModels
                 AutoControl = count > 0;
                 while (AutoControl)
                 {
-                    GetLook(out var block1, out var block2);
+                    GetJoin(out var block1, out var block2);
                     _firstBlock = block1;
                     Checked(block2);
                     if (count == _groupData.Sum(l => l.Value.Count))
@@ -558,5 +557,18 @@ namespace DistantStars.Client.GameModule.ViewModels
             //View.Show("你赢了!!!");
         }
 
+        public override void Close()
+        {
+            AutoControl = false;
+            if (_timer != null)
+            {
+                _timer.Stop();
+                _timer.Tick -= Timer_Tick;
+                _timer = null;
+            }
+            _firstBlock = null;
+            DataSourceList?.Clear();
+            _groupData?.Clear();
+        }
     }
 }

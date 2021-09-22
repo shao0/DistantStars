@@ -5,7 +5,7 @@ using System.Reflection;
 using DistantStars.Client.Model.Models.Systems;
 using DistantStars.Common.DTO.Enums;
 
-namespace DistantStars.Client.Model
+namespace DistantStars.Client.Common
 {
     public static class Global
     {

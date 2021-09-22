@@ -2,12 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DistantStars.Client.Common;
+using DistantStars.Client.Common.Events;
+using DistantStars.Client.Common.ViewModels;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model;
 using DistantStars.Client.Model.Enums;
-using DistantStars.Client.Model.Events;
 using DistantStars.Client.Model.Models.Systems;
-using DistantStars.Client.Model.ViewModels;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;

@@ -1,11 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
+using DistantStars.Client.Common;
+using DistantStars.Client.Common.Events;
 using DistantStars.Client.IBLL.Systems;
+using DistantStars.Client.Model.Models.Systems;
+using DistantStars.Client.Start.Models;
 using DistantStars.Client.Start.Views;
+using DistantStars.Common.DTO.Enums;
+using DistantStars.Common.DTO.Parameters;
+using Newtonsoft.Json;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 
 namespace DistantStars.Client.Start.ViewModels
@@ -13,40 +28,51 @@ namespace DistantStars.Client.Start.ViewModels
     public class LoginViewModel : BindableBase
     {
         private readonly IUserBLL _userBll;
+        private readonly IFileBLL _file;
+        private readonly IEventAggregator _ea;
         private FrameworkElement _view;
-        public LoginViewModel(IUserBLL userBll)
+
+        public LoginViewModel(IUserBLL userBll, IFileBLL file, IEventAggregator ea)
         {
             _userBll = userBll;
+            _file = file;
+            _ea = ea;
         }
-        #region string UserName 用户名称
+
+        #region List<LoginInfoRecord> LoginList 记录登录信息
         /// <summary>
-        /// 用户名称 字段
+        /// 记录登录信息字段
         /// </summary>
-        private string _UserName = "admin";
+        private List<LoginInfoRecord> _LoginList;
         /// <summary>
-        /// 用户名称 属性
+        /// 记录登录信息属性
         /// </summary>
-        public string UserName
+        public List<LoginInfoRecord> LoginList
         {
-            get => _UserName;
-            set => SetProperty(ref _UserName, value);
+            get => _LoginList;
+            set => SetProperty(ref _LoginList, value);
         }
         #endregion
 
-        #region string Password 密码
-        /// <summary>
-        /// 密码 字段
-        /// </summary>
-        private string _Password = "123456";
-        /// <summary>
-        /// 密码 属性
-        /// </summary>
-        public string Password
-        {
-            get => _Password;
-            set => SetProperty(ref _Password, value);
 
+        #region LoginInfoRecord Record 登录类
+        /// <summary>
+        /// 登录类字段
+        /// </summary>
+        private LoginInfoRecord _record;
+        /// <summary>
+        /// 登录类属性
+        /// </summary>
+        public LoginInfoRecord Record
+        {
+            get => _record;
+            set
+            {
+                if (value == null) value = new LoginInfoRecord();
+                SetProperty(ref _record, value);
+            }
         }
+
         #endregion
 
         #region string ErrorMessage 错误信息
@@ -64,6 +90,25 @@ namespace DistantStars.Client.Start.ViewModels
         }
         #endregion
 
+        private string _DocumentPath;
+        string DocumentPath
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_DocumentPath))
+                {
+                    _DocumentPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "DistantStars");
+                    if (!Directory.Exists(_DocumentPath))
+                    {
+                        Directory.CreateDirectory(_DocumentPath);
+                    }
+                }
+                return _DocumentPath;
+            }
+        }
+
+        private string JsonPath;
+
         #region LoadedCommand 加载命令
         /// <summary>
         /// 加载命令
@@ -75,6 +120,25 @@ namespace DistantStars.Client.Start.ViewModels
             if (obj is FrameworkElement view)
             {
                 _view = view;
+                JsonPath = Path.Combine(DocumentPath, "UserLogin.json");
+                if (File.Exists(JsonPath))
+                {
+                    var json = File.ReadAllText(JsonPath);
+                    LoginList = JsonConvert.DeserializeObject<List<LoginInfoRecord>>(json);
+                    Record = LoginList.FirstOrDefault(l => l.AutoLogin);
+                }
+                else
+                {
+                    LoginList = new List<LoginInfoRecord>();
+                }
+                if (Record == null)
+                {
+                    Record = new LoginInfoRecord();
+                }
+                else if (Record.AutoLogin)
+                {
+                    Login(_view);
+                }
             }
         }
 
@@ -92,12 +156,12 @@ namespace DistantStars.Client.Start.ViewModels
             //IMessage message = null;
             try
             {
-                if (string.IsNullOrWhiteSpace(UserName))
+                if (string.IsNullOrWhiteSpace(Record.UserAccount))
                 {
                     throw new Exception("用户不能为空!");
                 }
 
-                if (string.IsNullOrWhiteSpace(Password))
+                if (string.IsNullOrWhiteSpace(Record.Password))
                 {
                     throw new Exception("密码不能为空!");
                 }
@@ -106,9 +170,10 @@ namespace DistantStars.Client.Start.ViewModels
                 {
                     //message = _view.Show("登录中...", ShowEnum.ShowLoading);
 
-                    if (await _userBll.LoginAsync(UserName, Password))
+                    if (await _userBll.LoginAsync(Record.UserAccount, Record.Password))
                     {
                         //message.Message = "登录成功";
+                      await  LocalRecord();
                         login.DialogResult = true;
                     }
                     else
@@ -127,10 +192,51 @@ namespace DistantStars.Client.Start.ViewModels
             //}
         }
 
+        async Task LocalRecord()
+        {
+            var accountDocument = Path.Combine(DocumentPath, Record.UserAccount);
+            if (!Directory.Exists(accountDocument))
+            {
+                Directory.CreateDirectory(accountDocument);
+            }
+            var imagePath = Path.Combine(accountDocument, $"{Record.UserAccount}.jpg");
+            Global.CurrentUserInfo.UserIconPath = Record.UserIconPath;
+            if (Record.UserIconMd5 != Global.CurrentUserInfo.UserIcon)
+            {
+                await DownloadHeadPortrait(imagePath, Record);
+            }
+            LoginList.Remove(Record);
+            if (!Record.RememberPassword)
+            {
+                Record.Password = string.Empty;
+            }
+            LoginList.Insert(0, Record);
+            var json = JsonConvert.SerializeObject(LoginList, Formatting.Indented);
+            using (var sw = File.CreateText(JsonPath))
+            {
+                await sw.WriteAsync(json);
+            }
+            //_ea.GetEvent<CurrentUserUpdateEvent>().Publish(Global.CurrentUserInfo);
+        }
+        private async Task DownloadHeadPortrait(string imagePath, LoginInfoRecord loginCurrent)
+        {
+            var bytes = await _file.DownloadFileAsync(new FileParameter
+            { FileType = FileType.Image, MD5 = Global.CurrentUserInfo.UserIcon });
+            if (bytes.Length > 0)
+            {
+                using (var ms = new MemoryStream(bytes))
+                {
+                    using (var fs = new FileStream(imagePath, FileMode.Create))
+                    {
+                        ms.WriteTo(fs);
+                    }
+                }
+                loginCurrent.UserIconMd5 = Global.CurrentUserInfo.UserIcon;
+                Global.CurrentUserInfo.UserIconPath = loginCurrent.UserIconPath = imagePath;
+            }
+        }
+
         #endregion
-
-
-
 
     }
 }

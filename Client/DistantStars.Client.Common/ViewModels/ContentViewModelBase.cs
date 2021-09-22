@@ -1,19 +1,17 @@
 ﻿using System.Windows.Input;
-using DistantStars.Client.Common;
 using DistantStars.Common.DTO.Enums;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 
-namespace DistantStars.Client.Model.ViewModels
+namespace DistantStars.Client.Common.ViewModels
 {
-    public class ContentViewModelBase : BindableBase, INavigationAware
+    public abstract class ContentViewModelBase : BindableBase, INavigationAware
     {
         protected readonly IRegionManager _region;
 
-        
 
-        public ContentViewModelBase(IRegionManager region)
+        protected ContentViewModelBase(IRegionManager region)
         {
             _region = region;
         }
@@ -55,8 +53,13 @@ namespace DistantStars.Client.Model.ViewModels
 
         private void Close(object obj)
         {
+            Close();
             _region.Regions[RegionNames.MainContent].Remove(obj);
         }
+        /// <summary>
+        /// 关闭释放
+        /// </summary>
+        public abstract void Close();
 
         #endregion
 
@@ -80,17 +83,17 @@ namespace DistantStars.Client.Model.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Title = navigationContext.Parameters.GetValue<string>("Title");
-           _MenuType = navigationContext.Parameters.GetValue<MenuType>("MenuType");
+            _MenuType = navigationContext.Parameters.GetValue<MenuType>("MenuType");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-
             return true;
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            Close();
         }
     }
 }

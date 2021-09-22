@@ -1,4 +1,4 @@
-﻿using DistantStars.Client.Model.ViewModels;
+﻿using DistantStars.Client.Common.ViewModels;
 using Prism.Regions;
 
 namespace DistantStars.Client.ContentModule.ViewModels
@@ -7,6 +7,11 @@ namespace DistantStars.Client.ContentModule.ViewModels
     {
         public UserMainViewModel(IRegionManager region) : base(region)
         {
+        }
+
+        public override void Close()
+        {
+            
         }
     }
 }

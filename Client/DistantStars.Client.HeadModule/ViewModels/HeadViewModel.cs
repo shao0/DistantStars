@@ -2,13 +2,10 @@
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using DistantStars.Client.Common;
+using DistantStars.Client.Common.Events;
 using DistantStars.Client.Common.Helpers;
 using DistantStars.Client.IBLL.Systems;
-using DistantStars.Client.Model;
-using DistantStars.Client.Model.Events;
 using DistantStars.Client.Model.Models.Systems;
-using DistantStars.Common.DTO.Enums;
-using DistantStars.Common.DTO.Parameters;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -69,19 +66,15 @@ namespace DistantStars.Client.HeadModule.ViewModels
             {
                 View = view;
                 _ea.GetEvent<CurrentUserUpdateEvent>().Subscribe(LoadedUserInfo);
-
-                if (Global.CurrentUserInfo != null)
-                    LoadedUserInfo(Global.CurrentUserInfo);
+                LoadedUserInfo(Global.CurrentUserInfo);
             }
         }
 
-        private async void LoadedUserInfo(UserInfoModel obj)
+        private void LoadedUserInfo(UserInfoModel obj)
         {
             //var message = View.Show("正在加载...",ShowEnum.ShowLoading);
             UserName = obj.UserName;
-            var bytes = await _file.DownloadFileAsync(new FileParameter { FileType = FileType.Image, MD5 = obj.UserIcon });
-            if (bytes.Length > 0)
-                HeadIco = bytes.ConvertBitmapImage();
+            HeadIco = obj.UserIconPath.ConvertBitmapImage();
             //message.Close();
         }
 

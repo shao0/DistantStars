@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace DistantStars.Server.Start.Controllers
 {
@@ -38,7 +37,7 @@ namespace DistantStars.Server.Start.Controllers
             var bytes = await md5.ComputeHashAsync(stream);
             return BitConverter.ToString(bytes).ToLower().Replace("-", string.Empty);
         }
-        // GET: api/<FileController>
+        
         [HttpGet("[action]")]
         public async Task<ActionResult> DownloadFile([FromQuery] FileParameter parameter)
         {
@@ -57,9 +56,7 @@ namespace DistantStars.Server.Start.Controllers
             }
             return Ok();
         }
-
-
-        // POST api/<FileController>
+        
         [HttpPost("[action]")]
         public async Task<ActionResult<FileInfoDto>> UploadFile([FromQuery] FileParameter parameter, IFormFile file)
         {

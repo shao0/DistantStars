@@ -7,10 +7,7 @@ namespace DistantStars.Client.Model.Models.Games
         public int X { get; set; }
         public int Y { get; set; }
 
-        public string Img
-        {
-            get=> $"/DistantStars.Client.Resource;component/Images/Game/爱宠{_tag.ToString().PadLeft(2, '0')}.png";
-        }
+        public string Img => $"/DistantStars.Client.Resource;component/Images/Game/爱宠{_tag.ToString().PadLeft(2, '0')}.png";
 
         private bool _IsChecked;
         /// <summary>

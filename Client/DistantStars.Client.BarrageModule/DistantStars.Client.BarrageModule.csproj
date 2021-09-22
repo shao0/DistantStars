@@ -121,6 +121,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DistantStars.Client.Common\DistantStars.Client.Common.csproj">
+      <Project>{4BFC756E-ADC8-4E0F-9D24-34670DB139B1}</Project>
+      <Name>DistantStars.Client.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DistantStars.Client.Model\DistantStars.Client.Model.csproj">
       <Project>{32269D05-163D-4B28-8DB3-1CDC5F5F3CA9}</Project>
       <Name>DistantStars.Client.Model</Name>

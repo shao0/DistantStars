@@ -22,41 +22,39 @@ namespace DistantStars.Server.Start.Controllers
             _menuService = menuService;
             _mapper = mapper;
         }
-        // GET: api/<MenuController>
+        
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<MenuInfoDto>>> GetAllMenus()
         {
             return Ok(_mapper.Map<IEnumerable<MenuInfoDto>>(await _menuService.GetAllMenusAsync()));
         }
-
-        // GET api/<MenuController>/5
+        
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<IEnumerable<MenuInfoDto>>> GetMenusByRoleId(int id)
         {
             return Ok(_mapper.Map<IEnumerable<MenuInfoDto>>(await _menuService.GetMenusByRoleIdAsync(id)));
         }
-        // GET api/<MenuController>/5
+        
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<IEnumerable<MenuInfoDto>>> GetMenusByUserId(int id)
         {
             return Ok(_mapper.Map<IEnumerable<MenuInfoDto>>(await _menuService.GetMenusByUserIdAsync(id)));
         }
-
-        // GET api/<MenuController>/5
+        
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<IEnumerable<MenuInfoDto>>> DeleteMenu(int id)
         {
             await _menuService.DeleteAsync<MenuInfo>(id);
             return Ok();
         }
-        // POST api/<MenuController>
+        
         [HttpPost("[action]")]
         public async Task<ActionResult<MenuInfoDto>> AddMenu([FromBody] MenuInfoDto dto)
         {
             var menu = _mapper.Map<MenuInfo>(dto);
             return _mapper.Map<MenuInfoDto>(await _menuService.AddMenuAsync(menu));
         }
-        // POST api/<MenuController>
+        
         [HttpPost("[action]")]
         public async Task<ActionResult<MenuInfoDto>> UpdateMenu([FromBody] MenuInfoDto dto)
         {

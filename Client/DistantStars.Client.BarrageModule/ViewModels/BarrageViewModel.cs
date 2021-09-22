@@ -7,8 +7,8 @@ using System.Windows.Threading;
 using Prism.Commands;
 using DistantStars.Client.BarrageModule.Barrages;
 using DistantStars.Client.BarrageModule.Models;
-using DistantStars.Client.Model.ViewModels;
 using Prism.Regions;
+using DistantStars.Client.Common.ViewModels;
 
 namespace DistantStars.Client.BarrageModule.ViewModels
 {
@@ -137,6 +137,7 @@ namespace DistantStars.Client.BarrageModule.ViewModels
         #region LoadedCommand 加载命令
 
         private DelegateCommand<object> _LoadedCommand;
+
         /// <summary>
         /// 加载命令
         /// </summary>
@@ -264,5 +265,10 @@ namespace DistantStars.Client.BarrageModule.ViewModels
             NotReceived = true;
         }
 
+        public override void Close()
+        {
+            NotReceived = true;
+            Connect();
+        }
     }
 }

@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using DistantStars.Client.Common.Events;
 using DistantStars.Client.Common.Helpers;
+using DistantStars.Client.Common.ViewModels;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model.Enums;
-using DistantStars.Client.Model.Events;
 using DistantStars.Client.Model.Models.Systems;
-using DistantStars.Client.Model.ViewModels;
 using DistantStars.Common.DTO.Enums;
 using DistantStars.Common.DTO.Parameters;
 using Microsoft.Win32;

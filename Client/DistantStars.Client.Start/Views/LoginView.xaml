@@ -5,7 +5,6 @@
     xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:controls="clr-namespace:DistantStars.Client.Resource.Controls;assembly=DistantStars.Client.Resource"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:helpers="clr-namespace:DistantStars.Client.Common.Helpers;assembly=DistantStars.Client.Common"
     xmlns:local="clr-namespace:DistantStars.Client.Start.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -53,7 +52,7 @@
             Margin="0,10,0,-30"
             VerticalAlignment="Bottom">
             <Ellipse.Fill>
-                <ImageBrush ImageSource="/DistantStars.Client.Resource;Component/Images/DistantStars.ico" />
+                <ImageBrush ImageSource="{Binding Record.UserIcon}" />
             </Ellipse.Fill>
             <Ellipse.Effect>
                 <DropShadowEffect BlurRadius="10" ShadowDepth="0" />
@@ -67,29 +66,45 @@
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition Height="Auto" />
                 <RowDefinition />
                 <RowDefinition Height="20" />
             </Grid.RowDefinitions>
             <StackPanel>
                 <TextBlock Margin="2" Text="账号" />
-                <TextBox
+                <!--<TextBox
                     Height="40"
                     Background="#FFF9F9F9"
                     KeyboardNavigation.TabIndex="0"
-                    Text="{Binding UserName}" />
+                    Text="{Binding Model.UserAccount}" />-->
+                <ComboBox
+                    DisplayMemberPath="UserAccount"
+                    IsEditable="True"
+                    ItemsSource="{Binding LoginList}"
+                    SelectedValue="{Binding Record}"
+                    Text="{Binding Record.UserAccount}" />
             </StackPanel>
             <StackPanel Grid.Row="1">
                 <TextBlock Margin="2" Text="密码" />
                 <PasswordBox
-                    Grid.Row="1"
-                    Height="40"
                     helpers:PasswordHelper.Attach="True"
-                    helpers:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
+                    helpers:PasswordHelper.Password="{Binding Record.Password, Mode=TwoWay}"
                     Background="#FFF9F9F9"
                     KeyboardNavigation.TabIndex="1" />
             </StackPanel>
+            <DockPanel Grid.Row="2" Margin="0,2">
+                <CheckBox
+                    Content="自动登录"
+                    DockPanel.Dock="Left"
+                    IsChecked="{Binding Record.AutoLogin}" />
+                <CheckBox
+                    HorizontalAlignment="Right"
+                    Content="记住密码"
+                    DockPanel.Dock="Right"
+                    IsChecked="{Binding Record.RememberPassword}" />
+            </DockPanel>
             <Button
-                Grid.Row="2"
+                Grid.Row="3"
                 Height="40"
                 HorizontalAlignment="Stretch"
                 Command="{Binding LoginCommand}"
@@ -98,7 +113,7 @@
                 KeyboardNavigation.TabIndex="3"
                 Style="{StaticResource ButtonPrimary}" />
             <TextBlock
-                Grid.Row="3"
+                Grid.Row="4"
                 HorizontalAlignment="Center"
                 Foreground="Red"
                 Text="{Binding ErrorMessage}" />

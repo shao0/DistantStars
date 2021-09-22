@@ -3,7 +3,7 @@ using Prism.Mvvm;
 
 namespace DistantStars.Client.Model.Models.Systems
 {
-    public class UserInfoModel:BindableBase
+    public class UserInfoModel : BindableBase
     {
         public int Id { get; set; }
 
@@ -16,7 +16,6 @@ namespace DistantStars.Client.Model.Models.Systems
         public string UserIcon { get; set; }
 
         public int RoleId { get; set; }
-
 
         #region bool ModifyPassword 修改密码
         /// <summary>
@@ -52,4 +51,3 @@ namespace DistantStars.Client.Model.Models.Systems
         public IEnumerable<MenuInfoModel> Menus { get; set; }
     }
 }
-                                                                                                                                                                                                                                                                                                                                                

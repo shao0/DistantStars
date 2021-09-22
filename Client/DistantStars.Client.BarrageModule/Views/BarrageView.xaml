@@ -170,14 +170,17 @@
                 </StackPanel>
                 <ToggleButton
                     Name="Toggle"
-                    Margin="0,0,10,-50"
+                    Margin="0,0,10,-40"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
                     Click="Toggle_OnClick"
                     Cursor="Hand">
                     <ToggleButton.Template>
                         <ControlTemplate TargetType="ToggleButton">
-                            <Border Background="Transparent" Cursor="Hand">
+                            <Border
+                                Background="#80808080"
+                                CornerRadius="20"
+                                Cursor="Hand">
                                 <Path
                                     Name="PART_Path"
                                     Width="20"

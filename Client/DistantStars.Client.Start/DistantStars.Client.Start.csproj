@@ -44,6 +44,9 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.31\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=8.1.97.5141, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Prism.Core.8.1.97\lib\net47\Prism.dll</HintPath>
     </Reference>
@@ -56,6 +59,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -90,6 +94,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\LoginInfoRecord.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
@@ -137,6 +142,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\DistantStars.Common.DTO\DistantStars.Common.DTO.csproj">
+      <Project>{2B5CE42A-7A8C-4B3B-BA27-8B3FC407CC1E}</Project>
+      <Name>DistantStars.Common.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DistantStars.Client.BarrageModule\DistantStars.Client.BarrageModule.csproj">
       <Project>{5787925e-57eb-4b70-867c-f4caf877af83}</Project>
       <Name>DistantStars.Client.BarrageModule</Name>
@@ -173,6 +182,10 @@
       <Project>{10026097-6bc9-45ee-bc96-7a456014965e}</Project>
       <Name>DistantStars.Client.IDAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.Model\DistantStars.Client.Model.csproj">
+      <Project>{32269D05-163D-4B28-8DB3-1CDC5F5F3CA9}</Project>
+      <Name>DistantStars.Client.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DistantStars.Client.Resource\DistantStars.Client.Resource.csproj">
       <Project>{621f739d-194e-4ae0-b85a-b93356d8fa23}</Project>
       <Name>DistantStars.Client.Resource</Name>
@@ -181,5 +194,6 @@
   <ItemGroup>
     <Resource Include="Icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
