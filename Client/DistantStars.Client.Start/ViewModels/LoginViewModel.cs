@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
 using DistantStars.Client.Common;
-using DistantStars.Client.Common.Events;
 using DistantStars.Client.IBLL.Systems;
-using DistantStars.Client.Model.Models.Systems;
 using DistantStars.Client.Start.Models;
-using DistantStars.Client.Start.Views;
 using DistantStars.Common.DTO.Enums;
 using DistantStars.Common.DTO.Parameters;
 using Newtonsoft.Json;
@@ -125,7 +117,7 @@ namespace DistantStars.Client.Start.ViewModels
                 {
                     var json = File.ReadAllText(JsonPath);
                     LoginList = JsonConvert.DeserializeObject<List<LoginInfoRecord>>(json);
-                    Record = LoginList.FirstOrDefault(l => l.AutoLogin);
+                    Record = LoginList.FirstOrDefault();
                 }
                 else
                 {

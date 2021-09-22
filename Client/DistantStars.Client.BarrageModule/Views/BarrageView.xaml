@@ -21,7 +21,7 @@
             x:Key="ShowExtend"
             TargetProperty="Height"
             TargetName="ExtendControl">
-            <DoubleAnimation To="140" Duration="0:0:0.15">
+            <DoubleAnimation To="0" Duration="0:0:0.15">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
@@ -31,7 +31,7 @@
             x:Key="HiddenExtend"
             TargetProperty="Height"
             TargetName="ExtendControl">
-            <DoubleAnimation To="0" Duration="0:0:0.15">
+            <DoubleAnimation To="100" Duration="0:0:0.15">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
@@ -54,7 +54,10 @@
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <ListBox Grid.Row="1" ItemsSource="{Binding BarrageList}">
+            <ListBox
+                Grid.Row="1"
+                VerticalAlignment="Stretch"
+                ItemsSource="{Binding BarrageList}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:BarrageInfo}">
                         <TextBlock Name="txt" TextWrapping="Wrap">
@@ -69,8 +72,49 @@
                         </DataTemplate.Triggers>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Grid Background="#CCEEEEEE">
+                                        <Border
+                                            Margin="5"
+                                            Padding="5,10"
+                                            Background="White"
+                                            CornerRadius="5"
+                                            RenderTransformOrigin=".5,.5">
+                                            <Border.RenderTransform>
+                                                <TranslateTransform x:Name="PART_Translate" X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}" />
+                                            </Border.RenderTransform>
+                                            <ContentPresenter />
+                                        </Border>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <EventTrigger RoutedEvent="Loaded">
+                                            <EventTrigger.Actions>
+                                                <BeginStoryboard>
+                                                    <Storyboard TargetProperty="X" TargetName="PART_Translate">
+                                                        <DoubleAnimationUsingKeyFrames>
+                                                            <DoubleAnimationUsingKeyFrames.KeyFrames>
+                                                                <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
+                                                            </DoubleAnimationUsingKeyFrames.KeyFrames>
+                                                        </DoubleAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger.Actions>
+                                        </EventTrigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
             </ListBox>
-            <ListBox Grid.Row="2" ItemsSource="{Binding GiftList}">
+            <ListBox
+                Grid.Row="2"
+                VerticalAlignment="Stretch"
+                ItemsSource="{Binding GiftList}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:BarrageGift}">
                         <Grid>
@@ -131,7 +175,7 @@
             <Grid
                 Name="ExtendControl"
                 Grid.Row="0"
-                Height="0"
+                Height="100"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top">
                 <StackPanel>
@@ -186,7 +230,7 @@
                                     Width="20"
                                     Height="20"
                                     Margin="5"
-                                    Data="M 5 5 L 15 15 25 5"
+                                    Data="M 5 25 L 15 15 25 25"
                                     RenderTransformOrigin="0.5,.5"
                                     Stretch="Uniform"
                                     Stroke="Black"
