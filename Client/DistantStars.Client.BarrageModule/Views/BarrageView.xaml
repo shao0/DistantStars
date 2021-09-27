@@ -57,6 +57,7 @@
             <ListBox
                 Grid.Row="1"
                 VerticalAlignment="Stretch"
+                Background="#CCEEEEEE"
                 ItemsSource="{Binding BarrageList}">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:BarrageInfo}">
@@ -77,7 +78,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListBoxItem">
-                                    <Grid Background="#CCEEEEEE">
+                                    <Grid>
                                         <Border
                                             Margin="5"
                                             Padding="5,10"
@@ -86,6 +87,7 @@
                                             RenderTransformOrigin=".5,.5">
                                             <Border.RenderTransform>
                                                 <TranslateTransform x:Name="PART_Translate" X="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}" />
+                                                <!--<TranslateTransform x:Name="PART_Translate" Y="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualHeight}" />-->
                                             </Border.RenderTransform>
                                             <ContentPresenter />
                                         </Border>
@@ -94,8 +96,8 @@
                                         <EventTrigger RoutedEvent="Loaded">
                                             <EventTrigger.Actions>
                                                 <BeginStoryboard>
-                                                    <Storyboard TargetProperty="X" TargetName="PART_Translate">
-                                                        <DoubleAnimationUsingKeyFrames>
+                                                    <Storyboard TargetName="PART_Translate">
+                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="X">
                                                             <DoubleAnimationUsingKeyFrames.KeyFrames>
                                                                 <LinearDoubleKeyFrame KeyTime="0:0:0.5" Value="0" />
                                                             </DoubleAnimationUsingKeyFrames.KeyFrames>
@@ -175,45 +177,59 @@
             <Grid
                 Name="ExtendControl"
                 Grid.Row="0"
-                Height="100"
+                Height="80"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top">
-                <StackPanel>
-                    <StackPanel IsEnabled="{Binding NotReceived}" Orientation="Horizontal">
-                        <CheckBox
-                            Margin="5"
-                            Content="B站"
-                            IsChecked="{Binding Platform, Converter={StaticResource ValueToBool}, ConverterParameter=BiliBili}" />
-                        <CheckBox
-                            Margin="5"
-                            Content="斗鱼"
-                            IsChecked="{Binding Platform, Converter={StaticResource ValueToBool}, ConverterParameter=DouYu}" />
-                    </StackPanel>
-                    <TextBox IsEnabled="{Binding NotReceived}" Text="{Binding RoomNumber}" />
-                    <ToggleButton Command="{Binding ConnectCommand}" Cursor="Hand">
-                        <ToggleButton.Template>
-                            <ControlTemplate TargetType="ToggleButton">
-                                <Label
-                                    Name="PART_Label"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontSize="15" />
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsChecked" Value="True">
-                                        <Setter TargetName="PART_Label" Property="Content" Value="断开" />
-                                        <Setter TargetName="PART_Label" Property="Foreground" Value="Red" />
-                                    </Trigger>
-                                    <Trigger Property="IsChecked" Value="False">
-                                        <Setter TargetName="PART_Label" Property="Content" Value="连接" />
-                                        <Setter TargetName="PART_Label" Property="Foreground" Value="Green" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </ToggleButton.Template>
-                    </ToggleButton>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBox
+                    Margin="0,5,0,0"
+                    IsEnabled="{Binding NotReceived}"
+                    Text="{Binding RoomNumber}" />
+                <StackPanel
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    IsEnabled="{Binding NotReceived}"
+                    Orientation="Horizontal">
+                    <CheckBox
+                        Margin="5"
+                        Content="B站"
+                        IsChecked="{Binding Platform, Converter={StaticResource ValueToBool}, ConverterParameter=BiliBili}" />
+                    <CheckBox
+                        Margin="5"
+                        Content="斗鱼"
+                        IsChecked="{Binding Platform, Converter={StaticResource ValueToBool}, ConverterParameter=DouYu}" />
                 </StackPanel>
                 <ToggleButton
+                    Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ConnectCommand}"
+                    Cursor="Hand">
+                    <ToggleButton.Template>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Label
+                                Name="PART_Label"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="15" />
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="PART_Label" Property="Content" Value="断开" />
+                                    <Setter TargetName="PART_Label" Property="Foreground" Value="Red" />
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="False">
+                                    <Setter TargetName="PART_Label" Property="Content" Value="连接" />
+                                    <Setter TargetName="PART_Label" Property="Foreground" Value="Green" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </ToggleButton.Template>
+                </ToggleButton>
+                <ToggleButton
                     Name="Toggle"
+                    Grid.Row="1"
                     Margin="0,0,10,-40"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"

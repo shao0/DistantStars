@@ -541,7 +541,7 @@ namespace DistantStars.Client.GameModule.ViewModels
             TimeProgress = 100;
             View.Dispatcher.Invoke(() => { RandomDataSource(); });
             AutoControl = false;
-            //View.Show("你输了!!!");
+            //_View.Show("你输了!!!");
         }
         /// <summary>
         /// 赢
@@ -554,7 +554,7 @@ namespace DistantStars.Client.GameModule.ViewModels
             View.Dispatcher.Invoke(() => { RandomDataSource(); });
             TimeProgress = 100;
             AutoControl = false;
-            //View.Show("你赢了!!!");
+            //_View.Show("你赢了!!!");
         }
 
         public override void Close()

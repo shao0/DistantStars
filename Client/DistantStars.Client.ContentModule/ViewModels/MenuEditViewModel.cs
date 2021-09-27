@@ -9,6 +9,7 @@ using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model;
 using DistantStars.Client.Model.Enums;
 using DistantStars.Client.Model.Models.Systems;
+using DistantStars.Client.Resource.Helpers;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -47,6 +48,7 @@ namespace DistantStars.Client.ContentModule.ViewModels
         public override async Task LoadedData()
         {
             if (!(ModelInfo is MenuInfoModel menuInfo)) return;
+            var message = _View.Show("正在加载...", ShowEnum.ShowLoading);
             Menus.Clear();
             Menus.Add(new MenuInfoModel { MenuHeader = "一级菜单" });
             var allMenus = await _menu.GetAllMenusAsync();
@@ -54,12 +56,13 @@ namespace DistantStars.Client.ContentModule.ViewModels
             {
                 Menus.Add(model);
             }
+            message.Close();
         }
 
         public override async void Save()
         {
             if (!(ModelInfo is MenuInfoModel menuInfo)) return;
-            //var message = View.Show("正在保存...", ShowEnum.ShowLoading);
+            var message = _View.Show("正在保存...", ShowEnum.ShowLoading);
             if (ModelState == EditState.Modify)
             {
                 await _menu.UpdateMenuAsync(menuInfo);
@@ -70,8 +73,8 @@ namespace DistantStars.Client.ContentModule.ViewModels
             }
             _ea.GetEvent<CurrentUserMenuUpdateEvent>().Publish(Global.CurrentUserInfo.Id);
 
-            //message.Close();
-            //View.Show("保存成功");
+            message.Close();
+            _View.Show("保存成功");
             GoBack();
         }
 

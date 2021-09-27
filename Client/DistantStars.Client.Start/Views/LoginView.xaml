@@ -9,6 +9,7 @@
     xmlns:local="clr-namespace:DistantStars.Client.Start.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="http://prismlibrary.com/"
+    xmlns:tips="clr-namespace:DistantStars.Client.Resource.Controls.Tips;assembly=DistantStars.Client.Resource"
     xmlns:viewModels="clr-namespace:DistantStars.Client.Start.ViewModels"
     Title="登录"
     Width="430"
@@ -30,12 +31,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Border
             Grid.Row="0"
-            Grid.RowSpan="3"
+            Grid.RowSpan="2"
             Background="White"
             BorderBrush="#80808080"
             BorderThickness="1"
@@ -45,78 +45,80 @@
             CornerRadius="2,2,0,0"
             HiddenMin="True"
             HiddenNormal="True" />
-        <Ellipse
-            Grid.Row="1"
-            Width="60"
-            Height="60"
-            Margin="0,10,0,-30"
-            VerticalAlignment="Bottom">
-            <Ellipse.Fill>
-                <ImageBrush ImageSource="{Binding Record.UserIcon}" />
-            </Ellipse.Fill>
-            <Ellipse.Effect>
-                <DropShadowEffect BlurRadius="10" ShadowDepth="0" />
-            </Ellipse.Effect>
-        </Ellipse>
-        <Grid
-            Grid.Row="2"
-            Width="240"
-            Margin="0,30,0,0"
-            TextBlock.FontSize="16">
+        <Grid Grid.Row="1" tips:TipsBase.MessagePanel="{Binding RelativeSource={RelativeSource Self}}">
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
                 <RowDefinition Height="Auto" />
-                <RowDefinition />
-                <RowDefinition Height="20" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <StackPanel>
-                <TextBlock Margin="2" Text="账号" />
-                <!--<TextBox
+            <Ellipse
+                Grid.Row="0"
+                Width="60"
+                Height="60"
+                Margin="0,10,0,-30"
+                VerticalAlignment="Bottom">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{Binding Record.UserIcon}" />
+                </Ellipse.Fill>
+                <Ellipse.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" />
+                </Ellipse.Effect>
+            </Ellipse>
+            <Grid
+                Grid.Row="1"
+                Width="240"
+                Margin="0,30,0,0"
+                TextBlock.FontSize="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <TextBlock Margin="2" Text="账号" />
+                    <ComboBox
+                        DisplayMemberPath="UserAccount"
+                        IsEditable="True"
+                        ItemsSource="{Binding LoginList}"
+                        SelectedValue="{Binding Record}"
+                        Text="{Binding Record.UserAccount}" />
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <TextBlock Margin="2" Text="密码" />
+                    <PasswordBox
+                        helpers:PasswordHelper.Attach="True"
+                        helpers:PasswordHelper.Password="{Binding Record.Password, Mode=TwoWay}"
+                        Background="#FFF9F9F9"
+                        KeyboardNavigation.TabIndex="1" />
+                </StackPanel>
+                <DockPanel Grid.Row="2" Margin="0,2">
+                    <CheckBox
+                        Content="自动登录"
+                        DockPanel.Dock="Left"
+                        IsChecked="{Binding Record.AutoLogin}"
+                        Visibility="Collapsed" />
+                    <CheckBox
+                        HorizontalAlignment="Right"
+                        Content="记住密码"
+                        DockPanel.Dock="Right"
+                        IsChecked="{Binding Record.RememberPassword}" />
+                </DockPanel>
+                <Button
+                    Grid.Row="3"
                     Height="40"
-                    Background="#FFF9F9F9"
-                    KeyboardNavigation.TabIndex="0"
-                    Text="{Binding Model.UserAccount}" />-->
-                <ComboBox
-                    DisplayMemberPath="UserAccount"
-                    IsEditable="True"
-                    ItemsSource="{Binding LoginList}"
-                    SelectedValue="{Binding Record}"
-                    Text="{Binding Record.UserAccount}" />
-            </StackPanel>
-            <StackPanel Grid.Row="1">
-                <TextBlock Margin="2" Text="密码" />
-                <PasswordBox
-                    helpers:PasswordHelper.Attach="True"
-                    helpers:PasswordHelper.Password="{Binding Record.Password, Mode=TwoWay}"
-                    Background="#FFF9F9F9"
-                    KeyboardNavigation.TabIndex="1" />
-            </StackPanel>
-            <DockPanel Grid.Row="2" Margin="0,2">
-                <CheckBox
-                    Content="自动登录"
-                    DockPanel.Dock="Left"
-                    IsChecked="{Binding Record.AutoLogin}" />
-                <CheckBox
-                    HorizontalAlignment="Right"
-                    Content="记住密码"
-                    DockPanel.Dock="Right"
-                    IsChecked="{Binding Record.RememberPassword}" />
-            </DockPanel>
-            <Button
-                Grid.Row="3"
-                Height="40"
-                HorizontalAlignment="Stretch"
-                Command="{Binding LoginCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LoginView}}}"
-                Content="登录"
-                KeyboardNavigation.TabIndex="3"
-                Style="{StaticResource ButtonPrimary}" />
-            <TextBlock
-                Grid.Row="4"
-                HorizontalAlignment="Center"
-                Foreground="Red"
-                Text="{Binding ErrorMessage}" />
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding LoginCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:LoginView}}}"
+                    Content="登录"
+                    KeyboardNavigation.TabIndex="3"
+                    Style="{StaticResource ButtonPrimary}" />
+                <TextBlock
+                    Grid.Row="4"
+                    HorizontalAlignment="Center"
+                    Foreground="Red"
+                    Text="{Binding ErrorMessage}" />
+            </Grid>
         </Grid>
     </Grid>
 </Window>

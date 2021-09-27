@@ -26,7 +26,7 @@ namespace DistantStars.Client.DAL.Systems
             var fs = File.OpenRead(filePath);
             var contents = new MultipartFormDataContent();
             var streamContent = new StreamContent(fs);
-            streamContent.Headers.Add("Content-Disposition", "form-data; name=\"file\"; filename=\"SXF.jpg\"");
+            streamContent.Headers.Add("Content-Disposition", "form-data; name=\"file\"; filename=\"123.jpg\"");
             streamContent.Headers.Add("Content-Type", "image/jpeg");
             contents.Add(streamContent);
             var json = await PostStringAsync(uri, contents);

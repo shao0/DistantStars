@@ -72,7 +72,7 @@ namespace DistantStars.Client.HeadModule.ViewModels
 
         private void LoadedUserInfo(UserInfoModel obj)
         {
-            //var message = View.Show("正在加载...",ShowEnum.ShowLoading);
+            //var message = _View.Show("正在加载...",ShowEnum.ShowLoading);
             UserName = obj.UserName;
             HeadIco = obj.UserIconPath.ConvertBitmapImage();
             //message.Close();

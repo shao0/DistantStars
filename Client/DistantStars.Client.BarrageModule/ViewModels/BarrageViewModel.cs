@@ -267,7 +267,6 @@ namespace DistantStars.Client.BarrageModule.ViewModels
 
         public override void Close()
         {
-            NotReceived = true;
             Connect();
         }
     }

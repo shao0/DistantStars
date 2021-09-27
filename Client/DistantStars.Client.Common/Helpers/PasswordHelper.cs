@@ -71,7 +71,7 @@ namespace DistantStars.Client.Common.Helpers
             if (d is PasswordBox passwordBox)
             {
                 passwordBox.PasswordChanged -= PasswordBox_PasswordChanged;
-                if (!_isUpdating)
+                if (!_isUpdating && e.NewValue != null)
                 {
                     passwordBox.Password = e.NewValue.ToString();
                 }

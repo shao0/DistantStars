@@ -8,6 +8,7 @@ using DistantStars.Client.Common.ViewModels;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model.Enums;
 using DistantStars.Client.Model.Models.Systems;
+using DistantStars.Client.Resource.Helpers;
 using DistantStars.Common.DTO.Enums;
 using DistantStars.Common.DTO.Parameters;
 using Microsoft.Win32;
@@ -66,8 +67,9 @@ namespace DistantStars.Client.ContentModule.ViewModels
 
         public override async Task LoadedData()
         {
+            var message = _View.Show("正在加载...", ShowEnum.ShowLoading);
             var rolesTask = _role.GetAllRolesAsync();
-            if (ModelState ==EditState.Modify)
+            if (ModelState == EditState.Modify)
             {
                 if (!(ModelInfo is UserInfoModel userInfo)) return;
                 var bytes = await _file.DownloadFileAsync(new FileParameter { FileType = FileType.Image, MD5 = userInfo.UserIcon });
@@ -78,13 +80,14 @@ namespace DistantStars.Client.ContentModule.ViewModels
             {
                 Roles.Add(role);
             }
+            message.Close();
         }
 
 
         public override async void Save()
         {
             if (!(ModelInfo is UserInfoModel userInfo)) return;
-            //var message = View.Show("正在保存...", ShowEnum.ShowLoading);
+            var message = _View.Show("正在保存...", ShowEnum.ShowLoading);
             if (ModelState == EditState.Modify)
             {
                 if (userInfo.ModifyPassword) userInfo.UserPassword = Password;
@@ -99,8 +102,8 @@ namespace DistantStars.Client.ContentModule.ViewModels
                 userInfo.UserPassword = Password;
                 await _user.SignUpAsync(userInfo);
             }
-            //message.Close();
-            //View.Show("保存成功");
+            message.Close();
+            _View.Show("保存成功");
             GoBack();
         }
 

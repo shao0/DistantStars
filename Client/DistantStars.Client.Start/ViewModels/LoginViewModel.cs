@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Input;
 using DistantStars.Client.Common;
 using DistantStars.Client.IBLL.Systems;
+using DistantStars.Client.Resource.Helpers;
+using DistantStars.Client.Resource.Proxy;
 using DistantStars.Client.Start.Models;
 using DistantStars.Common.DTO.Enums;
 using DistantStars.Common.DTO.Parameters;
@@ -145,27 +147,24 @@ namespace DistantStars.Client.Start.ViewModels
 
         private async void Login(object obj)
         {
-            //IMessage message = null;
+            IMessage message = null;
             try
             {
                 if (string.IsNullOrWhiteSpace(Record.UserAccount))
                 {
                     throw new Exception("用户不能为空!");
                 }
-
                 if (string.IsNullOrWhiteSpace(Record.Password))
                 {
                     throw new Exception("密码不能为空!");
                 }
-
                 if (obj is Window login)
                 {
-                    //message = _view.Show("登录中...", ShowEnum.ShowLoading);
-
+                    message = _view.Show("登录中...", ShowEnum.ShowLoading);
                     if (await _userBll.LoginAsync(Record.UserAccount, Record.Password))
                     {
-                        //message.Message = "登录成功";
-                      await  LocalRecord();
+                        message.Message = "登录成功";
+                        await LocalRecord();
                         login.DialogResult = true;
                     }
                     else
@@ -176,14 +175,17 @@ namespace DistantStars.Client.Start.ViewModels
             }
             catch (Exception e)
             {
-                //_view.Show(e.Message);
+                _view.Show(e.Message);
             }
-            //finally
-            //{
-            //    message?.Close();
-            //}
+            finally
+            {
+                message?.Close();
+            }
         }
-
+        /// <summary>
+        /// 本地记录
+        /// </summary>
+        /// <returns></returns>
         async Task LocalRecord()
         {
             var accountDocument = Path.Combine(DocumentPath, Record.UserAccount);
@@ -210,10 +212,15 @@ namespace DistantStars.Client.Start.ViewModels
             }
             //_ea.GetEvent<CurrentUserUpdateEvent>().Publish(Global.CurrentUserInfo);
         }
+        /// <summary>
+        /// 下载头像
+        /// </summary>
+        /// <param name="imagePath"></param>
+        /// <param name="loginCurrent"></param>
+        /// <returns></returns>
         private async Task DownloadHeadPortrait(string imagePath, LoginInfoRecord loginCurrent)
         {
-            var bytes = await _file.DownloadFileAsync(new FileParameter
-            { FileType = FileType.Image, MD5 = Global.CurrentUserInfo.UserIcon });
+            var bytes = await _file.DownloadFileAsync(new FileParameter { FileType = FileType.Image, MD5 = Global.CurrentUserInfo.UserIcon });
             if (bytes.Length > 0)
             {
                 using (var ms = new MemoryStream(bytes))

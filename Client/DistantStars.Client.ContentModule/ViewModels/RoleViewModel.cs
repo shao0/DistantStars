@@ -7,6 +7,7 @@ using DistantStars.Client.ContentModule.Views;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model.Enums;
 using DistantStars.Client.Model.Models.Systems;
+using DistantStars.Client.Resource.Helpers;
 using DistantStars.Common.DTO.Parameters;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -41,9 +42,9 @@ namespace DistantStars.Client.ContentModule.ViewModels
             if (obj is FrameworkElement view)
             {
                 _View = view;
-                //var message = _View.Show("正在加载...", ShowEnum.ShowLoading);
+                var message = _View.Show("正在加载...", ShowEnum.ShowLoading);
                 await LoadedData();
-                //message.Close();
+                message.Close();
             }
         }
 
@@ -104,9 +105,9 @@ namespace DistantStars.Client.ContentModule.ViewModels
         {
             if (obj is string search)
             {
-                //var message = _View.Show("正在查询...", ShowEnum.ShowLoading);
+                var message = _View.Show("正在查询...", ShowEnum.ShowLoading);
                 await LoadedData(search);
-                //message.Close();
+                message.Close();
             }
         }
 
@@ -122,10 +123,11 @@ namespace DistantStars.Client.ContentModule.ViewModels
         {
             if (obj is int roleId)
             {
-                //var message = _View.Show("正在删除...", ShowEnum.ShowLoading);
+                var message = _View.Show("正在删除...", ShowEnum.ShowLoading);
                 await _role.DeleteAsync(roleId);
                 await LoadedData();
-                //message.Close();
+                message.Close();
+                _View.Show("删除成功");
             }
 
         }

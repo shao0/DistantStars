@@ -30,46 +30,25 @@
                                 Margin="5"
                                 VerticalAlignment="Center"
                                 Background="Transparent">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="30" />
-                                </Grid.ColumnDefinitions>
                                 <Grid.InputBindings>
                                     <MouseBinding
-                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MenuView}}, Path=DataContext.ClickMenuCommand}"
+                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.ClickMenuCommand}"
                                         CommandParameter="{Binding}"
                                         MouseAction="LeftClick" />
                                 </Grid.InputBindings>
                                 <Border
                                     x:Name="BorderBackground"
-                                    Grid.ColumnSpan="2"
-                                    Margin="-5" />
-                                <ContentPresenter
-                                    x:Name="PART_Header"
-                                    Grid.Column="0"
-                                    Margin="10,0"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    ContentSource="Header"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                <Path
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="2"
-                                    Margin="10,0"
-                                    VerticalAlignment="Bottom"
-                                    Data="M0,30 L30,30"
-                                    Stretch="Fill"
-                                    Stroke="Black"
-                                    StrokeDashArray="4,4" />
-                                <Path
-                                    x:Name="PART_Icon"
-                                    Grid.Column="1"
-                                    Width="12"
-                                    Height="12"
-                                    Margin="10,0"
-                                    Data="M 5,17 L 15,10,5,2"
-                                    Stretch="Uniform"
-                                    Stroke="Black"
-                                    StrokeThickness="1" />
+                                    Margin="-5"
+                                    BorderBrush="#80808080"
+                                    BorderThickness="0,0,0,1">
+                                    <ContentPresenter
+                                        x:Name="PART_Header"
+                                        Width="{TemplateBinding Width}"
+                                        Margin="10,5"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        ContentSource="Header"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Border>
                                 <Popup
                                     x:Name="PART_Popup"
                                     Grid.Column="0"
@@ -77,20 +56,17 @@
                                     Focusable="False"
                                     IsOpen="{TemplateBinding IsExpanded}"
                                     Placement="Right"
-                                    PlacementTarget="{Binding ElementName=PART_Header}"
-                                    VerticalOffset="-6">
+                                    PlacementTarget="{Binding ElementName=BorderBackground}"
+                                    VerticalOffset="-1">
                                     <Border
                                         Background="White"
                                         BorderBrush="DarkGray"
-                                        BorderThickness="1">
+                                        BorderThickness="1,1,1,0">
                                         <ItemsPresenter x:Name="ItemsHost" />
                                     </Border>
                                 </Popup>
                             </Grid>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="HasItems" Value="false">
-                                    <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
-                                </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="PART_Popup" Property="IsOpen" Value="True" />
                                     <Setter TargetName="BorderBackground" Property="Background" Value="#80808080" />
@@ -143,30 +119,36 @@
             Height="auto"
             Background="Transparent"
             BorderThickness="0"
-            Content="{Binding RootMenu.MenuIcon, Converter={StaticResource StringToIconConvert}}"
             Cursor="Hand"
             IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.Show}"
             TextBlock.FontFamily="{StaticResource FontFamily.Iconfont}"
             TextBlock.FontSize="30"
             TextBlock.Foreground="{StaticResource DefaultColor}"
-            ToolTip="菜单" />
-        <Popup IsOpen="{Binding ElementName=MenuButton, Path=IsChecked}" StaysOpen="False">
-            <TreeView
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                ItemsSource="{Binding RootMenu.Children}">
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                        <TextBlock Margin="5" TextBlock.Foreground="{StaticResource DefaultColor}">
-                            <Run
-                                FontFamily="{StaticResource FontFamily.Iconfont}"
-                                FontSize="15"
-                                Text="{Binding MenuIcon, Converter={StaticResource StringToIconConvert}}" />
-                            <Run Text="{Binding MenuHeader}" />
-                        </TextBlock>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
+            ToolTip="菜单">
+            <TextBlock Text="{Binding RootMenu.MenuIcon, Converter={StaticResource StringToIconConvert}}" />
+        </ToggleButton>
+        <Popup
+            AllowsTransparency="True"
+            IsOpen="{Binding ElementName=MenuButton, Path=IsChecked}"
+            StaysOpen="False">
+            <Border Background="Transparent">
+                <TreeView
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding RootMenu.Children}">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                            <TextBlock Margin="5" TextBlock.Foreground="{StaticResource DefaultColor}">
+                                <Run
+                                    FontFamily="{StaticResource FontFamily.Iconfont}"
+                                    FontSize="15"
+                                    Text="{Binding MenuIcon, Converter={StaticResource StringToIconConvert}}" />
+                                <Run Text="{Binding MenuHeader}" />
+                            </TextBlock>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Border>
         </Popup>
     </Grid>
     <!--</DataTemplate>

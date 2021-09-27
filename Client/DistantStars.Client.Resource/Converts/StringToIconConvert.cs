@@ -4,14 +4,14 @@ using System.Windows.Data;
 
 namespace DistantStars.Client.Resource.Converts
 {
-   public class StringToIconConvert:IValueConverter
+    public class StringToIconConvert : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string result = string.Empty;
+            object result = null;
             if (value is string v)
             {
-                result =((char) int.Parse(v, NumberStyles.HexNumber)).ToString();
+                result = (char)int.Parse(v, NumberStyles.HexNumber);
             }
             return result;
 

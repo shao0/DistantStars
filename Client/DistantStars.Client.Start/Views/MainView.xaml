@@ -5,6 +5,7 @@
     xmlns:common="clr-namespace:DistantStars.Client.Common;assembly=DistantStars.Client.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:tips="clr-namespace:DistantStars.Client.Resource.Controls.Tips;assembly=DistantStars.Client.Resource"
     xmlns:viewModels="clr-namespace:DistantStars.Client.Start.ViewModels"
     Title="{Binding Title}"
     Width="1200"
@@ -120,10 +121,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static common:RegionNames.MainHeader}" />
-        <TabControl
-            Grid.Row="1"
-            Margin="10"
-            prism:RegionManager.RegionName="{x:Static common:RegionNames.MainContent}"
-            ItemContainerStyle="{StaticResource TabItem.Style}" />
+        <Grid Grid.Row="1" tips:TipsBase.MessagePanel="{Binding RelativeSource={RelativeSource Self}}">
+            <TabControl
+                Margin="10"
+                prism:RegionManager.RegionName="{x:Static common:RegionNames.MainContent}"
+                ItemContainerStyle="{StaticResource TabItem.Style}" />
+        </Grid>
     </Grid>
 </Window>

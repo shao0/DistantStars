@@ -12,7 +12,7 @@ namespace DistantStars.Client.Common.ViewModels
     {
         private readonly IRegionManager _regionManager;
 
-        protected FrameworkElement View;
+        protected FrameworkElement _View;
 
         protected EditViewModelBase(IRegionManager regionManager)
         {
@@ -60,11 +60,12 @@ namespace DistantStars.Client.Common.ViewModels
         public ICommand LoadedCommand => new DelegateCommand<object>(Loaded);
 
 
-        public void Loaded(object obj)
+        public async void Loaded(object obj)
         {
             if (obj is FrameworkElement view)
             {
-                View = view;
+                _View = view;
+                await LoadedData();
             }
         }
         /// <summary>
@@ -83,7 +84,7 @@ namespace DistantStars.Client.Common.ViewModels
 
         protected void GoBack()
         {
-            _regionManager.RequestNavigate(View.GetType().Name.Replace("EditView", "ContentRegion"), View.GetType().Name.Replace("Edit", string.Empty));
+            _regionManager.RequestNavigate(_View.GetType().Name.Replace("EditView", "ContentRegion"), _View.GetType().Name.Replace("Edit", string.Empty));
         }
 
         #endregion
@@ -103,13 +104,10 @@ namespace DistantStars.Client.Common.ViewModels
         /// 进入页面
         /// </summary>
         /// <param name="navigationContext"></param>
-        public virtual async void OnNavigatedTo(NavigationContext navigationContext)
+        public virtual  void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //var message = Application.Current.MainWindow.Show("正在加载...", ShowEnum.ShowLoading);
             ModelState = navigationContext.Parameters.GetValue<EditState>("ModelState");
             ModelInfo = navigationContext.Parameters.GetValue<BindableBase>("Model");
-            await LoadedData();
-            //message.Close();
         }
 
 

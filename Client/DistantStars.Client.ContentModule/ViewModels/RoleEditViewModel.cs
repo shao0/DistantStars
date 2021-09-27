@@ -9,6 +9,7 @@ using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model;
 using DistantStars.Client.Model.Enums;
 using DistantStars.Client.Model.Models.Systems;
+using DistantStars.Client.Resource.Helpers;
 using Prism.Events;
 using Prism.Regions;
 
@@ -32,6 +33,7 @@ namespace DistantStars.Client.ContentModule.ViewModels
         
         public override async Task LoadedData()
         {
+            var message = _View.Show("正在加载...", ShowEnum.ShowLoading);
             var menusTask = _menu.GetAllMenusAsync();
             IEnumerable<MenuInfoModel> roleMenus = null;
             if (ModelState == EditState.Modify)
@@ -52,13 +54,13 @@ namespace DistantStars.Client.ContentModule.ViewModels
                     if (!model.Checked && dto.MenuId == model.MenuId) model.Checked = true;
                 }
             }
-
+            message.Close();
         }
 
         public override async void Save()
         {
             if (!(ModelInfo is RoleInfoModel roleInfo)) return;
-            //var message = View.Show("正在保存...", ShowEnum.ShowLoading);
+            var message = _View.Show("正在保存...", ShowEnum.ShowLoading);
             roleInfo.Menus = AllMenus.Where(menu => menu.Checked);
             if (ModelState == EditState.Modify)
             {
@@ -72,8 +74,8 @@ namespace DistantStars.Client.ContentModule.ViewModels
             {
                 await _role.AddRoleAsync(roleInfo);
             }
-            //message.Close();
-            //View.Show("保存成功");
+            message.Close();
+            _View.Show("保存成功");
             GoBack();
         }
 

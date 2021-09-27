@@ -5,9 +5,9 @@ using System.Windows.Input;
 using DistantStars.Client.Common;
 using DistantStars.Client.Common.Events;
 using DistantStars.Client.IBLL.Systems;
-using DistantStars.Client.Model;
 using DistantStars.Client.Model.Models.Systems;
 using DistantStars.Client.Resource.Fonts;
+using DistantStars.Client.Resource.Helpers;
 using DistantStars.Common.DTO.Enums;
 using Prism.Commands;
 using Prism.Events;
@@ -18,6 +18,7 @@ namespace DistantStars.Client.HeadModule.ViewModels
 {
     public class MenuViewModel : BindableBase
     {
+        private FrameworkElement View;
         private readonly IRegionManager _region;
         private readonly IEventAggregator _ea;
         private readonly IMenuBLL _menu;
@@ -94,6 +95,7 @@ namespace DistantStars.Client.HeadModule.ViewModels
         {
             if (obj is FrameworkElement view)
             {
+                View = view;
                 _ea.GetEvent<CurrentUserMenuUpdateEvent>().Subscribe(UpdateRole);
                 CreateMenuTree();
             }
@@ -101,6 +103,7 @@ namespace DistantStars.Client.HeadModule.ViewModels
 
         private async void UpdateRole(int Id)
         {
+            var message = View.Show("更新角色...",ShowEnum.ShowLoading);
             Menus.Clear();
             var menus = await _menu.GetMenusByUserIdAsync(Id);
             foreach (var model in menus)
@@ -109,6 +112,7 @@ namespace DistantStars.Client.HeadModule.ViewModels
                 Menus.Add(model);
             }
             CreateMenuTree();
+            message.Close();
         }
 
         #endregion
