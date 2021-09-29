@@ -6,7 +6,7 @@ using Prism.Regions;
 
 namespace DistantStars.Client.Common.ViewModels
 {
-    public abstract class ContentViewModelBase : BindableBase, INavigationAware
+    public abstract class ContentViewModelBase : ViewModelBase, INavigationAware
     {
         protected readonly IRegionManager _region;
 
@@ -64,18 +64,11 @@ namespace DistantStars.Client.Common.ViewModels
         #endregion
 
 
-        #region LoadedCommand 加载命令
-        /// <summary>
-        /// 加载命令
-        /// </summary>
-        public ICommand LoadedCommand => new DelegateCommand<object>(Loaded);
+        #region  加载
 
-        private void Loaded(object obj)
+        public override void LoadedContinue()
         {
-            if (obj != null)
-            {
-                _region.RequestNavigate($"{obj.GetType().Name.Replace("MainView", string.Empty)}ContentRegion", obj.GetType().Name.Replace("Main", string.Empty));
-            }
+            _region.RequestNavigate($"{_View.GetType().Name.Replace("MainView", string.Empty)}ContentRegion", _View.GetType().Name.Replace("Main", string.Empty));
         }
 
         #endregion

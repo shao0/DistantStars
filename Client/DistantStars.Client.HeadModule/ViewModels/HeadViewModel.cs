@@ -4,24 +4,22 @@ using System.Windows.Media.Imaging;
 using DistantStars.Client.Common;
 using DistantStars.Client.Common.Events;
 using DistantStars.Client.Common.Helpers;
+using DistantStars.Client.Common.ViewModels;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model.Models.Systems;
+using DistantStars.Client.Resource.Helpers;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 
 namespace DistantStars.Client.HeadModule.ViewModels
 {
-    public class HeadViewModel : BindableBase
+    public class HeadViewModel : ViewModelBase
     {
-        private readonly IFileBLL _file;
         private readonly IEventAggregator _ea;
-        private FrameworkElement View;
-        public HeadViewModel(IFileBLL file, IEventAggregator ea)
+        public HeadViewModel( IEventAggregator ea)
         {
-            _file = file;
             _ea = ea;
-            //HeadIco = GlobalEntity.CurrentUserInfo.UserIcon.Base64StringToBitmapImage();
         }
 
         #region BitmapImage HeadIco 属性名称
@@ -55,27 +53,20 @@ namespace DistantStars.Client.HeadModule.ViewModels
         #endregion
 
         #region LoadedCommand 加载命令
-        /// <summary>
-        /// 加载命令
-        /// </summary>
-        public ICommand LoadedCommand => new DelegateCommand<object>(Loaded);
 
-        public void Loaded(object obj)
+        public override void LoadedContinue()
         {
-            if (obj is FrameworkElement view)
-            {
-                View = view;
-                _ea.GetEvent<CurrentUserUpdateEvent>().Subscribe(LoadedUserInfo);
-                LoadedUserInfo(Global.CurrentUserInfo);
-            }
+            base.LoadedContinue();
+            _ea.GetEvent<CurrentUserUpdateEvent>().Subscribe(LoadedUserInfo);
+            LoadedUserInfo(Global.CurrentUserInfo);
         }
 
         private void LoadedUserInfo(UserInfoModel obj)
         {
-            //var message = _View.Show("正在加载...",ShowEnum.ShowLoading);
+            var message = _View.Show("正在加载头像...", ShowEnum.ShowLoading);
             UserName = obj.UserName;
             HeadIco = obj.UserIconPath.ConvertBitmapImage();
-            //message.Close();
+            message.Close();
         }
 
         #endregion

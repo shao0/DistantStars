@@ -8,6 +8,7 @@ using DistantStars.Client.HeadModule;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.IDAL.Systems;
 using DistantStars.Client.Start.Views;
+using DistantStars.Client.ToolModule;
 using Prism.Ioc;
 using Prism.Modularity;
 
@@ -50,6 +51,7 @@ namespace DistantStars.Client.Start
             moduleCatalog.AddModule<HeadModule.HeadModule>();
             moduleCatalog.AddModule<ContentModule.ContentModule>();
             moduleCatalog.AddModule<BarrageModule.BarrageModule>();
+            moduleCatalog.AddModule<ToolModule.ToolModule>();
             base.ConfigureModuleCatalog(moduleCatalog);
         }
     }

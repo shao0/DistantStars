@@ -190,6 +190,10 @@
       <Project>{621f739d-194e-4ae0-b85a-b93356d8fa23}</Project>
       <Name>DistantStars.Client.Resource</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.ToolModule\DistantStars.Client.ToolModule.csproj">
+      <Project>{9C3255BC-8E70-4131-919B-57F09672477B}</Project>
+      <Name>DistantStars.Client.ToolModule</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icon.ico" />

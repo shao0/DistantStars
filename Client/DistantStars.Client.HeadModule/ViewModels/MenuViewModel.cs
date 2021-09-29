@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using DistantStars.Client.Common;
 using DistantStars.Client.Common.Events;
+using DistantStars.Client.Common.ViewModels;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model.Models.Systems;
 using DistantStars.Client.Resource.Fonts;
@@ -16,9 +17,8 @@ using Prism.Regions;
 
 namespace DistantStars.Client.HeadModule.ViewModels
 {
-    public class MenuViewModel : BindableBase
+    public class MenuViewModel : ViewModelBase
     {
-        private FrameworkElement View;
         private readonly IRegionManager _region;
         private readonly IEventAggregator _ea;
         private readonly IMenuBLL _menu;
@@ -85,25 +85,18 @@ namespace DistantStars.Client.HeadModule.ViewModels
             }
         }
 
-        #region LoadedCommand 加载命令
-        /// <summary>
-        /// 加载命令
-        /// </summary>
-        public ICommand LoadedCommand => new DelegateCommand<object>(Loaded);
+        #region  加载
 
-        private void Loaded(object obj)
+        public override void LoadedContinue()
         {
-            if (obj is FrameworkElement view)
-            {
-                View = view;
-                _ea.GetEvent<CurrentUserMenuUpdateEvent>().Subscribe(UpdateRole);
-                CreateMenuTree();
-            }
+            base.LoadedContinue();
+            _ea.GetEvent<CurrentUserMenuUpdateEvent>().Subscribe(UpdateRole);
+            CreateMenuTree();
         }
 
         private async void UpdateRole(int Id)
         {
-            var message = View.Show("更新角色...",ShowEnum.ShowLoading);
+            var message = _View.Show("更新角色...",ShowEnum.ShowLoading);
             Menus.Clear();
             var menus = await _menu.GetMenusByUserIdAsync(Id);
             foreach (var model in menus)

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using DistantStars.Client.Common.ViewModels;
+using DistantStars.Client.GameModule.Common;
 using DistantStars.Client.Model.Models.Games;
 using Prism.Commands;
 using Prism.Events;
@@ -17,7 +18,6 @@ namespace DistantStars.Client.GameModule.ViewModels
 {
     public class GameViewModel : ContentViewModelBase
     {
-        FrameworkElement View;
 
         private readonly IEventAggregator _eventAggregator;
 
@@ -29,12 +29,12 @@ namespace DistantStars.Client.GameModule.ViewModels
         /// <summary>
         /// 分组数据
         /// </summary>
-        readonly Dictionary<int, List<Block>> _groupData = new Dictionary<int, List<Block>>();
+        private readonly Dictionary<int, List<Block>> _groupData = new Dictionary<int, List<Block>>();
 
         /// <summary>
         /// 关卡级别
         /// </summary>
-        private Level _level;
+        private readonly Level _level;
 
         /// <summary>
         /// 第一个选中
@@ -65,6 +65,12 @@ namespace DistantStars.Client.GameModule.ViewModels
         public double MaxProgress { get; set; } = 100;
 
 
+
+        public GameViewModel(IEventAggregator eventAggregator, IRegionManager regionManager) : base(regionManager)
+        {
+            _eventAggregator = eventAggregator;
+            _level = new Level();
+        }
         #region string ConnectPath 连接路径
         /// <summary>
         /// 连接路径 字段
@@ -119,34 +125,13 @@ namespace DistantStars.Client.GameModule.ViewModels
         }
         #endregion
 
-        public GameViewModel(IEventAggregator eventAggregator, IRegionManager regionManager) : base(regionManager)
+        #region  加载
+
+        public override void LoadedContinue()
         {
-            _eventAggregator = eventAggregator;
-            _level = new Level();
-        }
-
-        #region LoadCommand 加载命令
-
-        private DelegateCommand<object> _LoadCommand;
-        /// <summary>
-        /// 命令名称命令
-        /// </summary>
-        public DelegateCommand<object> LoadCommand => _LoadCommand ?? (_LoadCommand = new DelegateCommand<object>(Load));
-
-        private void Load(object obj)
-        {
-            if (obj is FrameworkElement w)
-            {
-                View = w;
-                Application.Current.MainWindow.Activated += MainWindow_Activated;
-                RandomDataSource(true);
-                InitialTimer();
-            }
-        }
-
-        private void MainWindow_Activated(object sender, EventArgs e)
-        {
-            View.Focus();
+            base.LoadedContinue();
+            RandomDataSource(true);
+            InitialTimer();
         }
 
         private void InitialTimer()
@@ -245,7 +230,7 @@ namespace DistantStars.Client.GameModule.ViewModels
             }
             else
             {
-                var match = GetMatch(_firstBlock, obj, out var pathPoints);
+                var match = DataSourceList.BlockMatch(_firstBlock, obj, out var pathPoints);
                 if (match && _firstBlock.Tag == obj.Tag)
                 {
                     CorrectSetTime();
@@ -299,130 +284,6 @@ namespace DistantStars.Client.GameModule.ViewModels
             sb.Remove(sb.Length - 1, 1);
             ConnectPath = sb.ToString();
         }
-
-        #region 判断消除
-        //垂直 X 相等  取 最小y -> 最大y 遍历，判断 value是否为0  遇到不是0返回false
-        public bool Vertical(Block a, Block b)
-        {
-            if (a.X != b.X) //垂直遍历 x必须相同
-            {
-                return false;
-            }
-
-            int yMax = Math.Max(a.Y, b.Y) - 1; //忽略自己
-            int yMin = Math.Min(a.Y, b.Y) + 1; //从相邻的开始， 忽略自己
-
-            for (int i = yMin; i <= yMax; i++)
-            {
-                if (DataSourceList[a.X][i].Tag != 0) //0代表 空
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-        //水平 y 相等  取 最小x -> 最大X 遍历，判断 value是否为0  遇到不是0返回false
-        public bool Horizontal(Block a, Block b)
-        {
-            if (a.Y != b.Y) //垂直遍历 x必须相同
-            {
-                return false;
-
-            }
-            int xMax = Math.Max(a.X, b.X) - 1; //忽略自己
-            int xMin = Math.Min(a.X, b.X) + 1; //从相邻的开始， 忽略自己
-
-            for (int i = xMin; i <= xMax; i++)
-            {
-                if (DataSourceList[i][a.Y].Tag != 0) //0代表 空
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-        public bool OnePoint(Block a, Block b, out Block[] pathPoints)
-        {
-
-            Block pointC = new Block() { X = a.X, Y = b.Y }; //x 和 a相同  ，y和b相同
-            Block pointD = new Block() { X = b.X, Y = a.Y };
-            pathPoints = null;
-            bool result = false;
-            if (DataSourceList[pointC.X][pointC.Y].Tag == 0)
-            {
-                pathPoints = new[] { a, pointC, b };
-                result = Vertical(a, pointC) && Horizontal(pointC, b);
-            }
-            if (!result && DataSourceList[pointD.X][pointD.Y].Tag == 0)
-            {
-                pathPoints = new[] { a, pointD, b };
-                result = Horizontal(a, pointD) && Vertical(pointD, b); //从 a-->c 再 从c-->b
-            }
-            return result;
-
-        }
-        public bool TwoPointPath(Block a, Block b, out Block[] pathPoints)
-        {
-            pathPoints = null;
-            //找一点 满足 
-            for (int i = 0; i < DataSourceList.Count; i++)
-            {
-                for (int j = 0; j < DataSourceList[i].Count; j++)
-                {
-                    if (a.X == i && a.Y == j || b.X == i && b.Y == j) continue;
-                    //if (i != a.X && i != b.X && j != a.Y && j != b.Y)
-                    if (DataSourceList[i][j].Tag == 0)
-                    {
-                        // 这个点 是a的一点拐点，且是 b的 垂直或者水平点
-                        //或者这个点是 b的一点拐点， 且 是 a的垂直点 或者水平点
-                        var c = new Block() { Y = j, X = i };
-                        if (OnePoint(a, c, out pathPoints) && (Vertical(c, b) || Horizontal(c, b)) || OnePoint(c, b, out pathPoints) && (Vertical(a, c) || Horizontal(a, c)))
-                        {
-                            var blocks = pathPoints.ToList();
-                            blocks.Insert(0, a);
-                            blocks.Add(b);
-                            pathPoints = blocks.ToArray();
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-        public bool GetMatch(Block a, Block b, out Block[] pathPoints)
-        {
-
-            bool isMatch = false;
-            pathPoints = null;
-            if (a.X == b.X || a.Y == b.Y)  //处理  位置 处于  十字线情况  不存在 一拐点
-            {
-                isMatch = a.X == b.X ? Vertical(a, b) : Horizontal(a, b);
-                if (isMatch)
-                {
-                    pathPoints = new[] { a, b };
-                    return isMatch;
-                }
-
-
-                isMatch = TwoPointPath(a, b, out pathPoints);
-
-                return isMatch;
-            }
-
-            isMatch = OnePoint(a, b, out pathPoints);
-            if (isMatch)
-            {
-                return isMatch;
-            }
-
-            isMatch = TwoPointPath(a, b, out pathPoints);
-
-            return isMatch;
-        }
-        #endregion
         #endregion
 
         #region TipsCommand 提示命令
@@ -451,7 +312,7 @@ namespace DistantStars.Client.GameModule.ViewModels
                         from block2
                             in array
                         where block1.Tag != 0 && block2.Tag != 0 && block1 != block2
-                        let match = GetMatch(block1, block2, out _)
+                        let match = DataSourceList.BlockMatch(block1, block2, out _)
                         where match && block1.Tag == block2.Tag
                         select block2)
                     {
@@ -521,7 +382,7 @@ namespace DistantStars.Client.GameModule.ViewModels
                     Checked(block2);
                     if (count == _groupData.Sum(l => l.Value.Count))
                     {
-                        View.Dispatcher.Invoke(Remake);
+                        _View.Dispatcher.Invoke(Remake);
                     }
                     Thread.Sleep(200);
                 }
@@ -539,7 +400,7 @@ namespace DistantStars.Client.GameModule.ViewModels
             _timer.Stop();
             _level.Reset();
             TimeProgress = 100;
-            View.Dispatcher.Invoke(() => { RandomDataSource(); });
+            _View.Dispatcher.Invoke(() => { RandomDataSource(); });
             AutoControl = false;
             //_View.Show("你输了!!!");
         }
@@ -551,7 +412,7 @@ namespace DistantStars.Client.GameModule.ViewModels
             TimerStart = true;
             _timer.Stop();
             _level.NextLevel();
-            View.Dispatcher.Invoke(() => { RandomDataSource(); });
+            _View.Dispatcher.Invoke(() => { RandomDataSource(); });
             TimeProgress = 100;
             AutoControl = false;
             //_View.Show("你赢了!!!");

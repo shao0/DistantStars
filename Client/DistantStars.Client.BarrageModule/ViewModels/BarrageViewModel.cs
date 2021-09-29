@@ -14,7 +14,6 @@ namespace DistantStars.Client.BarrageModule.ViewModels
 {
     public class BarrageViewModel : ContentViewModelBase
     {
-        private FrameworkElement _view;
 
         //public ObservableCollection<BarrageInfo> MessageList { get; set; } = new ObservableCollection<BarrageInfo> { };
 
@@ -134,24 +133,14 @@ namespace DistantStars.Client.BarrageModule.ViewModels
         }
         #endregion
 
-        #region LoadedCommand 加载命令
+        #region  加载
 
-        private DelegateCommand<object> _LoadedCommand;
-
-        /// <summary>
-        /// 加载命令
-        /// </summary>
-        public DelegateCommand<object> LoadedCommand => _LoadedCommand ?? (_LoadedCommand = new DelegateCommand<object>(Loaded));
-
-        private void Loaded(object obj)
+        public override void LoadedContinue()
         {
-            if (obj is FrameworkElement element)
-            {
-                _view = element;
-                _dispatcherTimer = new DispatcherTimer();
-                _dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
-                _dispatcherTimer.Tick += DispatcherTimer_Tick;
-            }
+            base.LoadedContinue();
+            _dispatcherTimer = new DispatcherTimer();
+            _dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+            _dispatcherTimer.Tick += DispatcherTimer_Tick;
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)

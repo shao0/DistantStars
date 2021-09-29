@@ -8,11 +8,10 @@ using Prism.Regions;
 
 namespace DistantStars.Client.Common.ViewModels
 {
-    public abstract class EditViewModelBase : BindableBase, INavigationAware
+    public abstract class EditViewModelBase : ViewModelBase, INavigationAware
     {
         private readonly IRegionManager _regionManager;
 
-        protected FrameworkElement _View;
 
         protected EditViewModelBase(IRegionManager regionManager)
         {
@@ -53,21 +52,13 @@ namespace DistantStars.Client.Common.ViewModels
         }
         #endregion
 
-        #region LoadedCommand 加载命令
-        /// <summary>
-        /// 加载命令
-        /// </summary>
-        public ICommand LoadedCommand => new DelegateCommand<object>(Loaded);
+        #region  加载
 
-
-        public async void Loaded(object obj)
+        public override async void LoadedContinue()
         {
-            if (obj is FrameworkElement view)
-            {
-                _View = view;
-                await LoadedData();
-            }
+            await LoadedData();
         }
+
         /// <summary>
         /// 加載數據
         /// </summary>
@@ -104,7 +95,7 @@ namespace DistantStars.Client.Common.ViewModels
         /// 进入页面
         /// </summary>
         /// <param name="navigationContext"></param>
-        public virtual  void OnNavigatedTo(NavigationContext navigationContext)
+        public virtual void OnNavigatedTo(NavigationContext navigationContext)
         {
             ModelState = navigationContext.Parameters.GetValue<EditState>("ModelState");
             ModelInfo = navigationContext.Parameters.GetValue<BindableBase>("Model");
