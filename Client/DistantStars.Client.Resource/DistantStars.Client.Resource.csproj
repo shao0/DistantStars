@@ -55,10 +55,12 @@
     <Compile Include="Controls\Tips\TipsBase.cs" />
     <Compile Include="Controls\WindowHead.cs" />
     <Compile Include="Converts\IntToBooleanConvert.cs" />
-    <Compile Include="Converts\StringToIconConvert.cs" />
+    <Compile Include="Data\Info\ShowMessageInfo.cs" />
+    <Compile Include="Data\Enum\ShowType.cs" />
     <Compile Include="Fonts\IconValues.cs" />
     <Compile Include="Helpers\AnimationHelper.cs" />
     <Compile Include="Controls\Tips\MessageControl.cs" />
+    <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Proxy\IMessage.cs" />
     <Compile Include="Helpers\MessageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -94,9 +96,21 @@
     <Resource Include="Images\YC.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Basic\Brushs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Basic\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ResourceDictionarys\Font.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Basic\Geometries.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceDictionarys\LoadingControl.xaml">
       <SubType>Designer</SubType>
@@ -111,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Basic\Effects.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

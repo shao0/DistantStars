@@ -10,6 +10,8 @@ using System.Windows.Threading;
 using DistantStars.Client.Common.ViewModels;
 using DistantStars.Client.GameModule.Common;
 using DistantStars.Client.Model.Models.Games;
+using DistantStars.Client.Resource.Data.Enum;
+using DistantStars.Client.Resource.Helpers;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -324,6 +326,55 @@ namespace DistantStars.Client.GameModule.ViewModels
             }
         }
 
+        /// <summary>
+        /// 连接消除
+        /// </summary>
+        /// <returns></returns>
+        bool KeepLook()
+        {
+            while (AutoControl)
+            {
+                var removeTagList = new List<int>();
+                var result = false;
+                foreach (var keyValue in _groupData)
+                {
+                    for (int i = 0; i < keyValue.Value.Count; i++)
+                    {
+                        for (var j = i + 1; j < keyValue.Value.Count; j++)
+                        {
+                            if (keyValue.Value[i].Tag == 0 || keyValue.Value[j].Tag == 0) continue;
+                            var b = DataSourceList.BlockMatch(keyValue.Value[i], keyValue.Value[j], out var pathPoints);
+                            if (!b) continue;
+                            result = true;
+                            CorrectSetTime();
+                            DrawConnectPath(pathPoints);
+                            keyValue.Value[i].Tag = keyValue.Value[j].Tag = 0;
+                            Thread.Sleep(200);
+                        }
+                    }
+                    var removeBlock = keyValue.Value.Where(block => block.Tag == 0).ToList();
+                    foreach (var block in removeBlock)
+                    {
+                        keyValue.Value.Remove(block);
+                    }
+
+                    if (keyValue.Value.Count == 0) removeTagList.Add(keyValue.Key);
+                }
+
+                foreach (var tag in removeTagList)
+                {
+                    _groupData.Remove(tag);
+                }
+
+                if (result && _groupData.Count > 0)
+                {
+                    continue;
+                }
+                return result || _groupData.Count == 0;
+            }
+            return true;
+        }
+
         #endregion
 
         #region RemakeCommand 刷新命令
@@ -373,18 +424,16 @@ namespace DistantStars.Client.GameModule.ViewModels
         {
             Task.Run(() =>
             {
-                var count = _groupData.Sum(l => l.Value.Count);
-                AutoControl = count > 0;
+                AutoControl = true;
                 while (AutoControl)
                 {
-                    GetJoin(out var block1, out var block2);
-                    _firstBlock = block1;
-                    Checked(block2);
-                    if (count == _groupData.Sum(l => l.Value.Count))
+                    var keepLook = KeepLook();
+                    if (keepLook)
                     {
-                        _View.Dispatcher.Invoke(Remake);
+                        WinControl();
+                        return;
                     }
-                    Thread.Sleep(200);
+                    _View.Dispatcher.Invoke(Remake);
                 }
             });
         }
@@ -402,7 +451,7 @@ namespace DistantStars.Client.GameModule.ViewModels
             TimeProgress = 100;
             _View.Dispatcher.Invoke(() => { RandomDataSource(); });
             AutoControl = false;
-            //_View.Show("你输了!!!");
+            _View.Show("你输了!!!",ShowType.Error);
         }
         /// <summary>
         /// 赢
@@ -415,7 +464,7 @@ namespace DistantStars.Client.GameModule.ViewModels
             _View.Dispatcher.Invoke(() => { RandomDataSource(); });
             TimeProgress = 100;
             AutoControl = false;
-            //_View.Show("你赢了!!!");
+            _View.Show("你赢了!!!", ShowType.Success);
         }
 
         public override void Close()

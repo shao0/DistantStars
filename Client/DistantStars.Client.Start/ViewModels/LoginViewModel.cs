@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using DistantStars.Client.Common;
 using DistantStars.Client.IBLL.Systems;
+using DistantStars.Client.Resource.Data.Enum;
 using DistantStars.Client.Resource.Helpers;
 using DistantStars.Client.Resource.Proxy;
 using DistantStars.Client.Start.Models;
@@ -160,7 +161,7 @@ namespace DistantStars.Client.Start.ViewModels
                 }
                 if (obj is Window login)
                 {
-                    message = _view.Show("登录中...", ShowEnum.ShowLoading);
+                    message = _view.Loading("登录中...");
                     if (await _userBll.LoginAsync(Record.UserAccount, Record.Password))
                     {
                         message.Message = "登录成功";
@@ -175,7 +176,7 @@ namespace DistantStars.Client.Start.ViewModels
             }
             catch (Exception e)
             {
-                _view.Show(e.Message);
+                _view.Show(e.Message,ShowType.Warning);
             }
             finally
             {

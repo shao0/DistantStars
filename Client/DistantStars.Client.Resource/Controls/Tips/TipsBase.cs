@@ -6,7 +6,11 @@ namespace DistantStars.Client.Resource.Controls.Tips
 {
     public abstract class TipsBase : ContentControl, IMessage
     {
+        /// <summary>
+        /// 消息容器
+        /// </summary>
         protected static Panel MessagePanel;
+
         static TipsBase()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TipsBase), new FrameworkPropertyMetadata(typeof(TipsBase)));
@@ -26,10 +30,10 @@ namespace DistantStars.Client.Resource.Controls.Tips
                 {
                     var window = GetMessageWindow((FrameworkElement)s);
 
-                    if (e.NewValue is FrameworkElement element)
+                    if (s is Panel panel)
                     {
-                        SetMessagePanel(window, element);
-                        element.Loaded += Element_Loaded;
+                        SetMessagePanel(window, panel);
+                        panel.Loaded += Element_Loaded;
                     }
                 }));
 
@@ -38,7 +42,7 @@ namespace DistantStars.Client.Resource.Controls.Tips
             if (sender is Grid grid)
             {
                 grid.Loaded -= Element_Loaded;
-                MessagePanel = new StackPanel { HorizontalAlignment = HorizontalAlignment.Right };
+                MessagePanel = new StackPanel { HorizontalAlignment = HorizontalAlignment.Right};
                 AddChildren(grid, MessagePanel);
             }
         }
@@ -48,14 +52,14 @@ namespace DistantStars.Client.Resource.Controls.Tips
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static FrameworkElement GetMessagePanel(DependencyObject obj) => (FrameworkElement)obj.GetValue(MessagePanelProperty);
+        public static FrameworkElement GetMessagePanel(DependencyObject obj) => (Panel)obj.GetValue(MessagePanelProperty);
 
         /// <summary>
         /// 设置消息容器面板
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="value"></param>
-        public static void SetMessagePanel(DependencyObject obj, FrameworkElement value)
+        public static void SetMessagePanel(DependencyObject obj, Panel value)
         {
             obj.SetValue(MessagePanelProperty, value);
         }

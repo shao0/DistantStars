@@ -15,7 +15,22 @@ namespace DistantStars.Client.Model.Models.Systems
 
         public string UserIcon { get; set; }
 
-        public int RoleId { get; set; }
+
+        #region int RoleId 角色id
+        /// <summary>
+        /// 角色id字段
+        /// </summary>
+        private int _RoleId;
+        /// <summary>
+        /// 角色id属性
+        /// </summary>
+        public int RoleId
+        {
+            get => _RoleId;
+            set => SetProperty(ref _RoleId, value);
+        }
+        #endregion
+
 
         #region bool ModifyPassword 修改密码
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using DistantStars.Client.Resource.Fonts;
 using DistantStars.Common.DTO.Enums;
 using Prism.Mvvm;
 
@@ -12,11 +13,26 @@ namespace DistantStars.Client.Model.Models.Systems
 
         public string TargetView { get; set; }
 
-        public int ParentId { get; set; }
-
         public MenuType MenuType { get; set; }
 
         public string StateName { get; set; }
+
+
+        #region int ParentId 父级id
+        /// <summary>
+        /// 父级id字段
+        /// </summary>
+        private int _ParentId;
+        /// <summary>
+        /// 父级id属性
+        /// </summary>
+        public int ParentId
+        {
+            get => _ParentId;
+            set => SetProperty(ref _ParentId, value);
+        }
+        #endregion
+
 
         #region int State 角色状态
         /// <summary>
@@ -43,7 +59,7 @@ namespace DistantStars.Client.Model.Models.Systems
         /// </summary>
         public string MenuIcon
         {
-            get => _MenuIcon;
+            get => _MenuIcon.FontValueToUnicodeConvert();
             set => SetProperty(ref _MenuIcon, value);
         }
         #endregion

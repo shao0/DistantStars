@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using DistantStars.Client.Common.Helpers;
 using DistantStars.Client.Common.ViewModels;
+using DistantStars.Client.Resource.Data.Enum;
 using DistantStars.Client.Resource.Helpers;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -44,7 +45,6 @@ namespace DistantStars.Client.ToolModule.ViewModels
             set => SetProperty(ref _FolderPath, value);
         }
         #endregion
-
 
         #region string WhiteString 黑底白字
         /// <summary>
@@ -144,7 +144,7 @@ namespace DistantStars.Client.ToolModule.ViewModels
 
         private async void Generate(object obj)
         {
-            var message = _View.Show("正在生成图片...", ShowEnum.ShowLoading);
+            var message = _View.Loading("正在生成图片...");
             await Task.Run(() =>
                {
                    var bitmap = new Bitmap(RectangleWidth, RectangleHeight, PixelFormat.Format32bppArgb);
@@ -170,7 +170,7 @@ namespace DistantStars.Client.ToolModule.ViewModels
                    }
                });
             message.Close();
-            _View.Show("生成完成");
+            _View.Show("生成完成",ShowType.Success);
         }
 
         #endregion
@@ -198,11 +198,11 @@ namespace DistantStars.Client.ToolModule.ViewModels
                     }
                 }
 
-                _View.Show($"保存完成:{imagePath}");
+                _View.Show($"保存完成:{imagePath}", ShowType.Success);
             }
             else
             {
-                _View.Show("未生成图片");
+                _View.Show("未生成图片", ShowType.Warning);
             }
         }
 

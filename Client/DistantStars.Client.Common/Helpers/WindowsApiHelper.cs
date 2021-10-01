@@ -131,7 +131,7 @@ namespace DistantStars.Client.Common.Helpers
         public static void LeftClick(this Point point)
         {
             SetCursorPos(point.X, point.Y);
-            Thread.Sleep(10);
+            Thread.Sleep(1);
             mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
             mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
         }
@@ -142,7 +142,7 @@ namespace DistantStars.Client.Common.Helpers
         public static void RightClick(this Point point)
         {
             SetCursorPos(point.X, point.Y);
-            Thread.Sleep(30);
+            Thread.Sleep(1);
             mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
             mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
         }

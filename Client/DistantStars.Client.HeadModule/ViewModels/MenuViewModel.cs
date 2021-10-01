@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using DistantStars.Client.Common;
+﻿using DistantStars.Client.Common;
 using DistantStars.Client.Common.Events;
 using DistantStars.Client.Common.ViewModels;
 using DistantStars.Client.IBLL.Systems;
@@ -12,8 +8,10 @@ using DistantStars.Client.Resource.Helpers;
 using DistantStars.Common.DTO.Enums;
 using Prism.Commands;
 using Prism.Events;
-using Prism.Mvvm;
 using Prism.Regions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
 
 namespace DistantStars.Client.HeadModule.ViewModels
 {
@@ -96,7 +94,7 @@ namespace DistantStars.Client.HeadModule.ViewModels
 
         private async void UpdateRole(int Id)
         {
-            var message = _View.Show("更新角色...",ShowEnum.ShowLoading);
+            var message = _View.Loading("更新角色...");
             Menus.Clear();
             var menus = await _menu.GetMenusByUserIdAsync(Id);
             foreach (var model in menus)

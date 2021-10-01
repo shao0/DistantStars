@@ -163,7 +163,6 @@
                 HorizontalAlignment="Center"
                 DisplayMemberPath="RoleName"
                 ItemsSource="{Binding Roles}"
-                SelectedIndex="0"
                 SelectedValue="{Binding ModelInfo.RoleId}"
                 SelectedValuePath="RoleId" />
             <TextBlock

@@ -7,6 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/DistantStars.Client.Resource;Component/Basic/Effects.xaml" />
                 <ResourceDictionary Source="/HandyControl;Component/themes/skindefault.xaml" />
                 <ResourceDictionary Source="/HandyControl;Component/themes/theme.xaml" />
             </ResourceDictionary.MergedDictionaries>

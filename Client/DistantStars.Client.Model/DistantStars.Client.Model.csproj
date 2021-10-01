@@ -72,6 +72,10 @@
       <Project>{2B5CE42A-7A8C-4B3B-BA27-8B3FC407CC1E}</Project>
       <Name>DistantStars.Common.DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DistantStars.Client.Resource\DistantStars.Client.Resource.csproj">
+      <Project>{621F739D-194E-4AE0-B85A-B93356D8FA23}</Project>
+      <Name>DistantStars.Client.Resource</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

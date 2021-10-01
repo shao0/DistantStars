@@ -12,8 +12,8 @@
     Height="740"
     MaxHeight="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"
     prism:ViewModelLocator.AutoWireViewModel="True"
-    BorderBrush="#80808080"
-    BorderThickness="1"
+    AllowsTransparency="True"
+    Background="Transparent"
     Icon="/DistantStars.Client.Resource;Component/Images/DistantStars.ico"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None">
@@ -67,6 +67,7 @@
                                 Background="Transparent"
                                 Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content.DataContext.CloseCommand}"
                                 CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
+                                Foreground="{TemplateBinding Foreground}"
                                 Visibility="Visible">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
@@ -95,13 +96,6 @@
                             </Button>
                         </Grid>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="ItemBorder" Property="Background" Value="DodgerBlue" />
-                                <Setter Property="Foreground" Value="White" />
-                            </Trigger>
-                            <DataTrigger Binding="{Binding Content.DataContext.MenuType}" Value="Home">
-                                <Setter TargetName="Close" Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ItemBorder" Property="Background" Value="DarkGray" />
                                 <Setter Property="Foreground" Value="Black" />
@@ -109,6 +103,13 @@
                             <Trigger Property="IsMouseOver" Value="False">
                                 <Setter TargetName="Close" Property="Visibility" Value="Collapsed" />
                             </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="DodgerBlue" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Content.DataContext.MenuType}" Value="Home">
+                                <Setter TargetName="Close" Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -120,6 +121,12 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Border
+            Grid.RowSpan="2"
+            Background="White"
+            BorderBrush="#80808080"
+            BorderThickness="1"
+            CornerRadius="4" />
         <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static common:RegionNames.MainHeader}" />
         <Grid Grid.Row="1" tips:TipsBase.MessagePanel="{Binding RelativeSource={RelativeSource Self}}">
             <TabControl

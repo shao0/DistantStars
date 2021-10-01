@@ -1,13 +1,17 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using DistantStars.Client.Common;
 using DistantStars.Client.Common.Events;
 using DistantStars.Client.Common.Helpers;
 using DistantStars.Client.Common.ViewModels;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model.Enums;
 using DistantStars.Client.Model.Models.Systems;
+using DistantStars.Client.Resource.Data.Enum;
 using DistantStars.Client.Resource.Helpers;
 using DistantStars.Common.DTO.Enums;
 using DistantStars.Common.DTO.Parameters;
@@ -67,7 +71,8 @@ namespace DistantStars.Client.ContentModule.ViewModels
 
         public override async Task LoadedData()
         {
-            var message = _View.Show("正在加载...", ShowEnum.ShowLoading);
+            var message = _View.Loading("正在加载...");
+            Roles.Clear();
             var rolesTask = _role.GetAllRolesAsync();
             if (ModelState == EditState.Modify)
             {
@@ -87,13 +92,15 @@ namespace DistantStars.Client.ContentModule.ViewModels
         public override async void Save()
         {
             if (!(ModelInfo is UserInfoModel userInfo)) return;
-            var message = _View.Show("正在保存...", ShowEnum.ShowLoading);
+            var message = _View.Loading("正在保存...");
             if (ModelState == EditState.Modify)
             {
                 if (userInfo.ModifyPassword) userInfo.UserPassword = Password;
                 var model = await _user.UpdateUserAsync(userInfo);
-                if (model != null)
+                if (model?.Id == Global.CurrentUserInfo.Id)
                 {
+                    //var imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "DistantStars", model.UserAccount, $"{model.UserAccount}.jpg");
+                    //userInfo.UserIconPath = imagePath;
                     _ea.GetEvent<CurrentUserUpdateEvent>().Publish(userInfo);
                 }
             }
@@ -103,7 +110,7 @@ namespace DistantStars.Client.ContentModule.ViewModels
                 await _user.SignUpAsync(userInfo);
             }
             message.Close();
-            _View.Show("保存成功");
+            _View.Show("保存成功", ShowType.Success);
             GoBack();
         }
 

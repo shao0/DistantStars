@@ -51,7 +51,6 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="2*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <ListBox
@@ -112,67 +111,6 @@
                         </Setter>
                     </Style>
                 </ListBox.ItemContainerStyle>
-            </ListBox>
-            <ListBox
-                Grid.Row="2"
-                VerticalAlignment="Stretch"
-                ItemsSource="{Binding GiftList}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type models:BarrageGift}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Label
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Content="{Binding NikeName}" />
-                            <Label
-                                Grid.Column="1"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Content="{Binding Content}" />
-                            <MediaElement
-                                Grid.Column="2"
-                                Width="40"
-                                Height="40"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                LoadedBehavior="Play"
-                                MediaEnded="MediaElement_OnMediaEnded"
-                                Source="{Binding DynamicGraph}"
-                                UnloadedBehavior="Manual" />
-                            <DockPanel Grid.Column="3">
-                                <TextBlock
-                                    Name="CountText"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    DockPanel.Dock="Top"
-                                    Foreground="Red">
-                                    <Run Text=" x" />
-                                    <Run Text="{Binding Count}" />
-                                </TextBlock>
-                                <TextBlock
-                                    Name="ContinuityText"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Bottom"
-                                    DockPanel.Dock="Bottom"
-                                    Foreground="OrangeRed">
-                                    <Run Text=" x" />
-                                    <Run Text="{Binding Continuity}" />
-                                </TextBlock>
-                            </DockPanel>
-                        </Grid>
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding Count}" Value="1">
-                                <Setter TargetName="CountText" Property="Visibility" Value="Collapsed" />
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
             </ListBox>
             <Grid
                 Name="ExtendControl"
@@ -266,21 +204,68 @@
                 </ToggleButton>
             </Grid>
         </Grid>
-        <!--<ItemsControl Grid.Column="1" ItemsSource="{Binding MessageList}">
-            <ItemsControl.Template>
-                <ControlTemplate>
-                    <ScrollViewer>
-                        <ItemsPresenter />
-                    </ScrollViewer>
-                </ControlTemplate>
-            </ItemsControl.Template>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:BarrageInfo}">
-                    <ScrollViewer>
-                        <TextBox Text="{Binding JsonMessage}" />
-                    </ScrollViewer>
+        <ListBox
+            Grid.Row="0"
+            Grid.Column="1"
+            VerticalAlignment="Stretch"
+            Background="#CCEEEEEE"
+            ItemsSource="{Binding GiftList}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:BarrageGift}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Content="{Binding NikeName}" />
+                        <Label
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Content="{Binding Content}" />
+                        <MediaElement
+                            Grid.Column="2"
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            LoadedBehavior="Play"
+                            MediaEnded="MediaElement_OnMediaEnded"
+                            Source="{Binding DynamicGraph}"
+                            UnloadedBehavior="Manual" />
+                        <DockPanel Grid.Column="3">
+                            <TextBlock
+                                Name="CountText"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                DockPanel.Dock="Top"
+                                Foreground="Red">
+                                <Run Text=" x" />
+                                <Run Text="{Binding Count}" />
+                            </TextBlock>
+                            <TextBlock
+                                Name="ContinuityText"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                DockPanel.Dock="Bottom"
+                                Foreground="OrangeRed">
+                                <Run Text=" x" />
+                                <Run Text="{Binding Continuity}" />
+                            </TextBlock>
+                        </DockPanel>
+                    </Grid>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Count}" Value="1">
+                            <Setter TargetName="CountText" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
                 </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>-->
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

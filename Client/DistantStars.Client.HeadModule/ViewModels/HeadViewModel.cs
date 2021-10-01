@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using DistantStars.Client.Common;
@@ -17,7 +18,7 @@ namespace DistantStars.Client.HeadModule.ViewModels
     public class HeadViewModel : ViewModelBase
     {
         private readonly IEventAggregator _ea;
-        public HeadViewModel( IEventAggregator ea)
+        public HeadViewModel(IEventAggregator ea)
         {
             _ea = ea;
         }
@@ -63,9 +64,12 @@ namespace DistantStars.Client.HeadModule.ViewModels
 
         private void LoadedUserInfo(UserInfoModel obj)
         {
-            var message = _View.Show("正在加载头像...", ShowEnum.ShowLoading);
+            var message = _View.Loading("正在加载头像...");
             UserName = obj.UserName;
-            HeadIco = obj.UserIconPath.ConvertBitmapImage();
+            if (File.Exists(obj.UserIconPath))
+            {
+                HeadIco = obj.UserIconPath.ConvertBitmapImage();
+            }
             message.Close();
         }
 

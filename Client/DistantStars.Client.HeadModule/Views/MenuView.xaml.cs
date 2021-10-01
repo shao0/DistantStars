@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace DistantStars.Client.HeadModule.Views
 {
@@ -11,5 +12,12 @@ namespace DistantStars.Client.HeadModule.Views
         {
             InitializeComponent();
         }
+
+        private void MenuButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            RootMenu.PlacementTarget = MenuButton;
+            RootMenu.IsOpen = true;
+        }
+        
     }
 }

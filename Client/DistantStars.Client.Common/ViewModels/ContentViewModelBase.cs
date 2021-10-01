@@ -10,7 +10,6 @@ namespace DistantStars.Client.Common.ViewModels
     {
         protected readonly IRegionManager _region;
 
-
         protected ContentViewModelBase(IRegionManager region)
         {
             _region = region;
@@ -64,19 +63,16 @@ namespace DistantStars.Client.Common.ViewModels
         #endregion
 
 
-        #region  加载
-
-        public override void LoadedContinue()
-        {
-            _region.RequestNavigate($"{_View.GetType().Name.Replace("MainView", string.Empty)}ContentRegion", _View.GetType().Name.Replace("Main", string.Empty));
-        }
-
-        #endregion
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             Title = navigationContext.Parameters.GetValue<string>("Title");
             _MenuType = navigationContext.Parameters.GetValue<MenuType>("MenuType");
+            var name = GetType().Name;
+            var regionName = $"{name.Replace("MainViewModel", string.Empty)}ContentRegion";
+            if (!_region.Regions.ContainsRegionWithName(regionName)) return;
+            var sourceName = name.Replace("Main", string.Empty).Replace("ViewModel", "View");
+            _region.RequestNavigate(regionName, sourceName);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -86,7 +82,7 @@ namespace DistantStars.Client.Common.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            Close();
+            if (navigationContext.Uri.ToString() != _View.GetType().Name) Close();
         }
     }
 }

@@ -39,10 +39,10 @@
             Background="White"
             BorderBrush="#80808080"
             BorderThickness="1"
-            CornerRadius="2" />
+            CornerRadius="4" />
         <controls:WindowHead
             Grid.Row="0"
-            CornerRadius="2,2,0,0"
+            CornerRadius="4,4,0,0"
             HiddenMin="True"
             HiddenNormal="True" />
         <Grid Grid.Row="1" tips:TipsBase.MessagePanel="{Binding RelativeSource={RelativeSource Self}}">
@@ -55,13 +55,12 @@
                 Width="60"
                 Height="60"
                 Margin="0,10,0,-30"
-                VerticalAlignment="Bottom">
+                VerticalAlignment="Bottom"
+                Effect="{DynamicResource Effect.Default}">
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="{Binding Record.UserIcon}" />
                 </Ellipse.Fill>
-                <Ellipse.Effect>
-                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" />
-                </Ellipse.Effect>
+
             </Ellipse>
             <Grid
                 Grid.Row="1"

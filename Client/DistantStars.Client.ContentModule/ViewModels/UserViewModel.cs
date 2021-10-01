@@ -3,22 +3,20 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using DistantStars.Client.Common;
+using DistantStars.Client.Common.ViewModels;
 using DistantStars.Client.IBLL.Systems;
 using DistantStars.Client.Model.Enums;
-using DistantStars.Client.Model.Models;
 using DistantStars.Client.Model.Models.Systems;
+using DistantStars.Client.Resource.Data.Enum;
 using DistantStars.Client.Resource.Helpers;
 using DistantStars.Common.DTO.Parameters;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Regions;
 
 namespace DistantStars.Client.ContentModule.ViewModels
 {
-    public class UserViewModel : BindableBase
+    public class UserViewModel : ViewModelBase
     {
-        private FrameworkElement _View;
-
         private readonly IUserBLL _user;
         private readonly IRegionManager _region;
 
@@ -30,21 +28,13 @@ namespace DistantStars.Client.ContentModule.ViewModels
             _region = region;
         }
 
-        #region LoadedCommand 加载命令
-        /// <summary>
-        /// 加载命令
-        /// </summary>
-        public ICommand LoadedCommand => new DelegateCommand<object>(Loaded);
+        #region  加载
 
-        private async void Loaded(object obj)
+        public override async void LoadedContinue()
         {
-            if (obj is FrameworkElement view)
-            {
-                _View = view;
-                var message = _View.Show("正在加载...", ShowEnum.ShowLoading);
-                await LoadedData();
-                message.Close();
-            }
+            var message = _View.Loading("正在加载...");
+            await LoadedData();
+            message.Close();
         }
 
         private async Task LoadedData(string search = null)
@@ -103,7 +93,7 @@ namespace DistantStars.Client.ContentModule.ViewModels
         {
             if (obj is string search)
             {
-                var message = _View.Show("正在查询...", ShowEnum.ShowLoading);
+                var message = _View.Loading("正在查询...");
                 await LoadedData(search);
                 message.Close();
             }
@@ -121,11 +111,11 @@ namespace DistantStars.Client.ContentModule.ViewModels
         {
             if (obj is int menuId)
             {
-                var message = _View.Show("正在删除...", ShowEnum.ShowLoading);
+                var message = _View.Loading("正在删除...");
                 await _user.DeleteUserAsync(menuId);
                 await LoadedData();
                 message.Close();
-                _View.Show("删除成功");
+                _View.Show("删除成功", ShowType.Success);
             }
 
         }
