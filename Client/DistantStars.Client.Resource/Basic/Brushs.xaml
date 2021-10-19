@@ -3,7 +3,7 @@
     <SolidColorBrush x:Key="InfoBrush" Color="{DynamicResource InfoColor}" />
     <SolidColorBrush x:Key="SuccessBrush" Color="{DynamicResource SuccessColor}" />
     <SolidColorBrush x:Key="WarningBrush" Color="{DynamicResource WarningColor}" />
-    <SolidColorBrush x:Key="ErrorBrush" Color="{DynamicResource ErrorColor}" />
-    <SolidColorBrush x:Key="FatalBrush" Color="{DynamicResource FatalColor}" />
+    <SolidColorBrush x:Key="ErrorBrush" Color="{DynamicResource DangerColor}" />
+    <SolidColorBrush x:Key="FatalBrush" Color="{DynamicResource PrimaryTextColor}" />
 
 </ResourceDictionary>

@@ -4,6 +4,6 @@
     <Color x:Key="SuccessColor">#2db84d</Color>
     <Color x:Key="WarningColor">#e9af20</Color>
     <Color x:Key="ErrorColor">#db3340</Color>
-    <Color x:Key="FatalColor">#212121</Color>
+    <Color x:Key="PrimaryTextColor">#212121</Color>
 
 </ResourceDictionary>

@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using DistantStars.Client.Resource.Helpers;
 using DistantStars.Client.Resource.Proxy;
+using HandyControl.Interactivity;
 
 namespace DistantStars.Client.Resource.Controls.Tips
 {
     public class LoadingControl : TipsBase
     {
-        /// <summary>
-        /// 控件名称
-        /// </summary>
-        public static string LoadingControlName => "LoadingControl";
+        public TipsAdorner TipsAdorner;
 
         private Panel LoadingPanel;
 
@@ -91,11 +91,15 @@ namespace DistantStars.Client.Resource.Controls.Tips
                 LoadingPanel.Children.Add(border);
             }
         }
+
         public override void Close()
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                Visibility = Visibility.Collapsed;
+                if (TipsAdorner != null)
+                {
+                    WindowAdornerDecorator?.AdornerLayer?.Remove(TipsAdorner);
+                }
             }));
         }
 
@@ -104,24 +108,19 @@ namespace DistantStars.Client.Resource.Controls.Tips
             IMessage message = null;
             element?.Dispatcher.Invoke(() =>
             {
-                var window = Window.GetWindow(element);
-                if (GetMessagePanel(window) is Grid grid)
+                var loading = WindowAdornerDecorator.AdornerLayer.FindVisualChild<LoadingControl>();
+                if (loading != null)
                 {
-                    LoadingControl messageControl;
-                    if (grid.FindName(LoadingControlName) is LoadingControl loadingControl)
-                    {
-                        loadingControl.Visibility = Visibility.Visible;
-                        messageControl = loadingControl;
-                        loadingControl.Message = msg;
-                    }
-                    else
-                    {
-                        messageControl = new LoadingControl(msg);
-                        AddChildren(grid, messageControl);
-                        grid.RegisterName(LoadingControlName, messageControl);
-                    }
-                    message = messageControl;
+                    loading.Message = msg;
                 }
+                else
+                {
+                    loading = new LoadingControl(msg);
+                    var layer = WindowAdornerDecorator.AdornerLayer;
+                    loading.TipsAdorner = new TipsAdorner(layer) { Child = loading };
+                    layer.Add(loading.TipsAdorner);
+                }
+                message = loading;
             });
             return message;
         }

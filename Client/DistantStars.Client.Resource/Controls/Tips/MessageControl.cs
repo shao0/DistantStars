@@ -39,7 +39,40 @@ namespace DistantStars.Client.Resource.Controls.Tips
             get { return (Brush)GetValue(IconBrushProperty); }
             set { SetValue(IconBrushProperty, value); }
         }
+        private static Panel _MessagePanel;
 
+        private static Panel MessagePanel => _MessagePanel ?? CreatePanel();
+
+        private static Panel CreatePanel()
+        {
+            var layer = WindowAdornerDecorator.AdornerLayer;
+            if (layer != null)
+            {
+                _MessagePanel = new StackPanel
+                {
+                    VerticalAlignment = VerticalAlignment.Top
+                };
+
+                var scrollViewer = new ScrollViewer
+                {
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
+                    Content = _MessagePanel
+                };
+
+                var tipsAdorner = new TipsAdorner(layer)
+                {
+                    Child = scrollViewer
+                };
+
+                layer.Add(tipsAdorner);
+
+                return _MessagePanel;
+            }
+
+
+            return null;
+        }
 
 
         static MessageControl()

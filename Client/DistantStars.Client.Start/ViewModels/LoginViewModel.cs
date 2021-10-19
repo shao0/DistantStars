@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -148,7 +149,7 @@ namespace DistantStars.Client.Start.ViewModels
 
         private async void Login(object obj)
         {
-            IMessage message = null;
+            IMessage message = _view.Loading("登录中...");
             try
             {
                 if (string.IsNullOrWhiteSpace(Record.UserAccount))
@@ -161,7 +162,6 @@ namespace DistantStars.Client.Start.ViewModels
                 }
                 if (obj is Window login)
                 {
-                    message = _view.Loading("登录中...");
                     if (await _userBll.LoginAsync(Record.UserAccount, Record.Password))
                     {
                         message.Message = "登录成功";
@@ -176,7 +176,7 @@ namespace DistantStars.Client.Start.ViewModels
             }
             catch (Exception e)
             {
-                _view.Show(e.Message,ShowType.Warning);
+                _view.Show(e.Message, ShowType.Warning);
             }
             finally
             {

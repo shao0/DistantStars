@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="HandyControl, Version=3.2.0.0, Culture=neutral, PublicKeyToken=45be8712787a1e5b, processorArchitecture=MSIL">
@@ -51,6 +53,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Tips\TipsAdorner.cs" />
     <Compile Include="Controls\Tips\LoadingControl.cs" />
     <Compile Include="Controls\Tips\TipsBase.cs" />
     <Compile Include="Controls\WindowHead.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="Helpers\AnimationHelper.cs" />
     <Compile Include="Controls\Tips\MessageControl.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
+    <Compile Include="Helpers\VisualHelper.cs" />
     <Compile Include="Proxy\IMessage.cs" />
     <Compile Include="Helpers\MessageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -96,6 +100,10 @@
     <Resource Include="Images\YC.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Basic\Basic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Basic\Brushs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

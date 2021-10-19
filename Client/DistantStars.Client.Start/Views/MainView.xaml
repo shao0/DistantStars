@@ -20,6 +20,26 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" />
     </WindowChrome.WindowChrome>
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Border
+                    Grid.RowSpan="2"
+                    Background="White"
+                    BorderBrush="#80808080"
+                    BorderThickness="1"
+                    CornerRadius="4" />
+                <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static common:RegionNames.MainHeader}" />
+                <AdornerDecorator Grid.Row="1">
+                    <ContentPresenter />
+                </AdornerDecorator>
+            </Grid>
+        </ControlTemplate>
+    </Window.Template>
     <Window.Resources>
         <Style x:Key="TabItem.Style" TargetType="{x:Type TabItem}">
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -116,23 +136,9 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Border
-            Grid.RowSpan="2"
-            Background="White"
-            BorderBrush="#80808080"
-            BorderThickness="1"
-            CornerRadius="4" />
-        <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static common:RegionNames.MainHeader}" />
-        <Grid Grid.Row="1" tips:TipsBase.MessagePanel="{Binding RelativeSource={RelativeSource Self}}">
-            <TabControl
-                Margin="10"
-                prism:RegionManager.RegionName="{x:Static common:RegionNames.MainContent}"
-                ItemContainerStyle="{StaticResource TabItem.Style}" />
-        </Grid>
-    </Grid>
+    <TabControl
+        Grid.Row="1"
+        Margin="10"
+        prism:RegionManager.RegionName="{x:Static common:RegionNames.MainContent}"
+        ItemContainerStyle="{StaticResource TabItem.Style}" />
 </Window>

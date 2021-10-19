@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/DistantStars.Client.Resource;Component/Basic/Colors.xaml" />
+        <ResourceDictionary Source="/DistantStars.Client.Resource;Component/Basic/Brushs.xaml" />
+        <ResourceDictionary Source="/DistantStars.Client.Resource;Component/Basic/Effects.xaml" />
+        <ResourceDictionary Source="/DistantStars.Client.Resource;Component/Basic/Geometries.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
