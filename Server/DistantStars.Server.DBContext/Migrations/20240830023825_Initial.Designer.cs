@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DistantStars.Server.DBContext.Migrations
 {
     [DbContext(typeof(EFCoreContext))]
-    [Migration("20210908061047_Initial")]
+    [Migration("20240830023825_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,8 +56,8 @@ namespace DistantStars.Server.DBContext.Migrations
                     b.Property<string>("MenuIcon")
                         .HasColumnType("text");
 
-                    b.Property<string>("MenuType")
-                        .HasColumnType("text");
+                    b.Property<int>("MenuType")
+                        .HasColumnType("int");
 
                     b.Property<int>("ParentId")
                         .HasColumnType("int");

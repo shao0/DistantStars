@@ -45,6 +45,7 @@ namespace DistantStars.Client.Resource.Controls.Tips
 
         private static Panel CreatePanel()
         {
+
             var layer = WindowAdornerDecorator.AdornerLayer;
             if (layer != null)
             {

@@ -21,11 +21,11 @@ namespace DistantStars.Client.Resource.Controls.Tips
 
         public string Message
         {
-            get => (string)GetValue(MessageProperty);
+            get => (string) GetValue(MessageProperty);
             set => SetValue(MessageProperty, value);
         }
 
-        public static Window GetActiveWindow() => Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+        public static Window GetActiveWindow() => Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive) ?? Application.Current.MainWindow;
 
 
         public static AdornerDecorator WindowAdornerDecorator => GetActiveWindow().FindVisualChild<AdornerDecorator>();

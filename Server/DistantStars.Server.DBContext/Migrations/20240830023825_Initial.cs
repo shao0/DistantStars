@@ -31,7 +31,7 @@ namespace DistantStars.Server.DBContext.Migrations
                     MenuHeader = table.Column<string>(type: "text", nullable: true),
                     MenuIcon = table.Column<string>(type: "text", nullable: true),
                     TargetView = table.Column<string>(type: "text", nullable: true),
-                    MenuType = table.Column<string>(type: "text", nullable: true),
+                    MenuType = table.Column<int>(type: "int", nullable: false),
                     ParentId = table.Column<int>(type: "int", nullable: false),
                     Index = table.Column<int>(type: "int", nullable: false),
                     State = table.Column<int>(type: "int", nullable: false)

@@ -82,7 +82,7 @@ namespace DistantStars.Client.Common.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            if (navigationContext.Uri.ToString() != _View.GetType().Name) Close();
+            if (navigationContext.Uri.ToString() != _View?.GetType().Name) Close();
         }
     }
 }
